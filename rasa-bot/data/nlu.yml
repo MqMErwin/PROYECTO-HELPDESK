@@ -1,0 +1,67 @@
+version: "3.1"
+
+nlu:
+- intent: saludar
+  examples: |
+    - hola
+    - buenos días
+    - qué tal
+    - saludos
+    - buen día
+    - hola asistente
+    - ey qué onda
+    - buenas tardes
+    - cómo estás?
+    - se te extrañaba!
+
+- intent: despedirse
+  examples: |
+    - adiós
+    - hasta luego
+    - nos vemos
+    - chao
+    - hasta pronto
+    - me retiro
+    - bye
+    - hasta la próxima
+    - nos vemos mañana
+    - que descanses
+
+- intent: registrar_problema
+  examples: |
+    - tengo un problema con [el proyector](equipo)
+    - no funciona [el internet](equipo)
+    - [la impresora](equipo) no imprime
+    - hay fallas en [el sistema eléctrico](equipo)
+    - necesito reportar un fallo en [el laboratorio 3](ubicacion)
+    - [las computadoras](equipo) del aula 4 no encienden
+    - el [software](equipo) de diseño se cierra solo
+    - hay un problema en [el aire acondicionado](equipo) del [aula 202](ubicacion)
+    - [el servidor](equipo) no responde
+    - [el cañón proyector](equipo) no muestra imagen
+
+- intent: consultar_estado
+  examples: |
+    - cuál es el estado de mi ticket
+    - ha sido resuelto mi problema?
+    - quiero saber sobre mi solicitud
+    - cómo va mi reporte?
+    - número de seguimiento [HD-123](num_ticket)
+    - status del ticket [HD-456](num_ticket)
+    - qué pasó con mi reporte del [martes](fecha)
+    - sigue pendiente mi solicitud?
+    - han resuelto lo del [laboratorio](ubicacion)?
+    - hay novedades con mi caso?
+
+- intent: preguntas_frecuentes
+  examples: |
+    - qué horarios tienen?
+    - dónde está la oficina de soporte?
+    - cómo contacto al área técnica?
+    - cuánto tardan en responder?
+    - qué equipos pueden reparar?
+    - tienen servicio los fines de semana?
+    - cuál es su política de garantías?
+    - quién es el jefe de soporte?
+    - qué debo hacer si olvidé mi contraseña?
+    - cómo solicito materiales?

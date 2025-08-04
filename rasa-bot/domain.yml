@@ -1,0 +1,97 @@
+version: "3.1"
+
+intents:
+  - saludar
+  - despedirse
+  - registrar_problema
+  - consultar_estado
+  - preguntas_frecuentes
+
+responses:
+  utter_saludar:
+    - text: "¡Hola! Soy el asistente de soporte de la EMI. ¿En qué puedo ayudarte hoy?"
+    - text: "¡Buen día! Estoy aquí para asistirte con problemas técnicos. ¿Qué necesitas?"
+    - text: "Hola :) ¿Qué problema técnico necesitas reportar o qué información necesitas?"
+
+  utter_despedirse:
+    - text: "Hasta luego. Recuerda que puedes volver si necesitas más ayuda técnica."
+    - text: "¡Que tengas un excelente día! No dudes en consultarme si surge otro problema."
+    - text: "Nos vemos. Tu ticket quedó registrado con el número {num_ticket} por si necesitas seguimiento."
+
+  utter_pedir_detalles:
+    - text: "Para ayudarte mejor, ¿podrías especificar exactamente qué equipo presenta fallas y en qué ubicación?"
+    - text: "Voy a registrar el problema. Necesito saber: 1) ¿Qué equipo falla? 2) ¿Dónde está ubicado? 3) ¿Qué síntoma presenta?"
+    - text: "Entiendo que hay un problema. ¿Podrías darme más detalles? Por ejemplo: 'El proyector del aula 101 no enciende'"
+
+  utter_confirmar_ticket:
+    - text: "¡Listo! He registrado el problema con {equipo} en {ubicacion}. Tu número de ticket es {num_ticket}. ¿Necesitas algo más?"
+    - text: "Ticket creado: Problema con {equipo} en {ubicacion}. N° {num_ticket}. Un técnico se contactará pronto."
+    - text: "Registro completo: {equipo} en {ubicacion} (Ticket {num_ticket}). Prioridad media. ¿Algo más que reportar?"
+
+  utter_estado_ticket:
+    - text: "Estado del ticket {num_ticket}: {estado}. {comentario} Última actualización: {fecha_actualizacion}"
+    - text: "Sobre tu ticket {num_ticket}: {estado}. {comentario} ¿Quieres que notifique al técnico para mayor urgencia?"
+    - text: "Consulta: {num_ticket} | Estado: {estado} | {comentario}"
+
+  utter_faq_horarios:
+    - text: "Nuestro horario de atención es de lunes a viernes de 8:00 a 20:00, y sábados de 9:00 a 14:00."
+    - text: "Atención al público: L-V 8-20, Sáb 9-14. Soporte remoto 24/7 para emergencias."
+
+  utter_faq_contacto:
+    - text: "Puedes contactar al área técnica al teléfono 1234567 o al correo soporte@emi.edu.bo"
+    - text: "Oficina de Soporte: Edificio Central, piso 2. Tel: 1234567. Correo: soporte@emi.edu.bo"
+
+  utter_default:
+    - text: "Disculpa, no entendí completamente. ¿Podrías reformular tu consulta?"
+    - text: "Voy a derivar tu consulta a un técnico. Mientras tanto, ¿hay algo más específico que necesites?"
+    - text: "No estoy seguro de entender. ¿Podrías darme más detalles sobre tu consulta?"
+
+entities:
+  - equipo
+  - ubicacion
+  - num_ticket
+  - estado
+  - fecha
+  - fecha_actualizacion
+  - sintoma
+
+slots:
+  equipo:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: equipo
+  
+  ubicacion:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: ubicacion
+  
+  num_ticket:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: custom
+  
+  estado:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: custom
+  
+  fecha_actualizacion:
+    type: text
+    influence_conversation: false
+
+actions:
+  - action_validar_problema
+  - action_crear_ticket
+  - action_consultar_estado
+  - action_responder_faq
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

@@ -1,0 +1,71 @@
+version: "3.1"
+
+stories:
+
+- story: registro completo de problema
+  steps:
+    - intent: saludar
+    - action: utter_saludar
+    - intent: registrar_problema
+      entities:
+        - equipo
+        - ubicacion
+    - action: action_validar_problema
+    - action: action_crear_ticket
+    - action: utter_confirmar_ticket
+    - intent: despedirse
+    - action: utter_despedirse
+
+- story: registro incompleto con seguimiento
+  steps:
+    - intent: registrar_problema
+      entities:
+        - equipo
+    - action: utter_pedir_detalles
+    - intent: registrar_problema
+      entities:
+        - ubicacion
+    - action: action_crear_ticket
+    - action: utter_confirmar_ticket
+
+- story: consulta estado con ticket
+  steps:
+    - intent: consultar_estado
+      entities:
+        - num_ticket
+    - action: action_consultar_estado
+    - action: utter_estado_ticket
+
+- story: consulta estado sin ticket
+  steps:
+    - intent: consultar_estado
+    - action: utter_pedir_detalles
+    - intent: consultar_estado
+      entities:
+        - num_ticket
+    - action: action_consultar_estado
+    - action: utter_estado_ticket
+
+- story: pregunta frecuente horarios
+  steps:
+    - intent: preguntas_frecuentes
+      entities:
+        - "horarios"
+    - action: utter_faq_horarios
+
+- story: pregunta frecuente contacto
+  steps:
+    - intent: preguntas_frecuentes
+      entities:
+        - "contacto"
+    - action: utter_faq_contacto
+
+- story: flujo mixto consulta y reporte
+  steps:
+    - intent: saludar
+    - action: utter_saludar
+    - intent: preguntas_frecuentes
+    - action: action_responder_faq
+    - intent: registrar_problema
+    - action: utter_pedir_detalles
+    - intent: registrar
