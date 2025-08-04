@@ -9,26 +9,29 @@ export default function Login({ onLogin }) {
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    
-    const users = [
-      { correo: 'estudiante', contrasena: '1234', rol: 'Usuario' },
-      { correo: 'tecnico', contrasena: '1234', rol: 'Tecnico' },
-      { correo: 'admin', contrasena: '1234', rol: 'Admin' }
-    ];
-  
-    const user = users.find(u => u.correo === correo && u.contrasena === contrasena);
-  
-    if (!user) {
-      setError('Credenciales inválidas');
-      return;
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:5131/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: correo, password: contrasena })
+      });
+
+      if (!response.ok) {
+        setError('Credenciales inválidas');
+        return;
+      }
+
+      const data = await response.json();
+      onLogin(data.token, data.role || 'Usuario');
+    } catch (err) {
+      setError('Error de conexión');
     }
-  
-    onLogin('fake-token', user.rol);
   };
-  
+
 
   return (
     <div className="login-container">
