@@ -2,7 +2,7 @@ namespace HelpDeskAPI.Models
 {
     public class LoginRequest
     {
-        public string Correo { get; set; }
-        public string Contraseña { get; set; }
+        public string Correo { get; set; } = string.Empty;
+        public string Contraseña { get; set; } = string.Empty;
     }
 }

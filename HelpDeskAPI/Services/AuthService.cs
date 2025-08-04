@@ -22,7 +22,7 @@ public class AuthService
 
         var keyValue = _configuration["Jwt:Key"]
             ?? throw new InvalidOperationException("JWT Key not configured");
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyValue));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyValue ?? string.Empty));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
