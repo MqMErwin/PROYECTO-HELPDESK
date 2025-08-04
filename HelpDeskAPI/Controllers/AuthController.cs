@@ -1,6 +1,7 @@
 using HelpDeskAPI.Data;
 using HelpDeskAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HelpDeskAPI.Controllers
 {
@@ -16,15 +17,17 @@ namespace HelpDeskAPI.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequest request)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            // Lógica de autenticación (temporal de prueba)
-            if (request.Username == "admin" && request.Password == "1234")
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Correo == request.Correo && u.Contraseña == request.Contraseña);
+
+            if (user == null)
             {
-                return Ok(new { token = "fake-jwt-token", role = "Admin" });
+                return Unauthorized();
             }
 
-            return Unauthorized();
+            return Ok(new { token = "fake-jwt-token", role = user.Rol });
         }
 
         /// <summary>
@@ -45,11 +48,5 @@ namespace HelpDeskAPI.Controllers
 
             return CreatedAtAction(nameof(UsersController.GetUser), "Users", new { id = user.Id }, user);
         }
-    }
-
-    public class LoginRequest
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
     }
 }
