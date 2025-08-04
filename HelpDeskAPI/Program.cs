@@ -29,7 +29,7 @@ var issuer = jwtSettings["Issuer"]
     ?? throw new InvalidOperationException("JWT Issuer missing in configuration");
 var audience = jwtSettings["Audience"]
     ?? throw new InvalidOperationException("JWT Audience missing in configuration");
-var key = Encoding.ASCII.GetBytes(keyString);
+var key = Encoding.ASCII.GetBytes(keyString ?? string.Empty);
 
 // 🔐 Configurar autenticación JWT
 builder.Services.AddAuthentication(options =>

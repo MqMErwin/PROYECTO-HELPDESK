@@ -11,16 +11,16 @@ namespace HelpDeskAPI.Models
         public int TicketId { get; set; }
 
         [ForeignKey("TicketId")]
-        public Ticket Ticket { get; set; }
+        public Ticket? Ticket { get; set; }
 
         [Required]
         public int UsuarioId { get; set; }
 
         [ForeignKey("UsuarioId")]
-        public User Usuario { get; set; }
+        public User? Usuario { get; set; }
 
         [Required]
-        public string Mensaje { get; set; }
+        public string Mensaje { get; set; } = string.Empty;
 
         public DateTime Fecha { get; set; }
         public DateTime Timestamp { get; set; } = DateTime.Now;
