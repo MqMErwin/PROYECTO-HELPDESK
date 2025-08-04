@@ -1,6 +1,6 @@
 namespace HelpDeskAPI.Models
 {
-    public class LoginRequestUser
+    public class LoginRequest
     {
         public string Correo { get; set; }
         public string Contraseña { get; set; }
