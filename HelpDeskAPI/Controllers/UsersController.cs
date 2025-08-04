@@ -45,7 +45,7 @@ namespace HelpDeskAPI.Controllers
 
         // POST: api/users/login
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequestUser loginRequest)
+        public IActionResult Login([FromBody] LoginRequest loginRequest)
         {
             var correo = loginRequest.Correo;
             var contraseña = loginRequest.Contraseña;
