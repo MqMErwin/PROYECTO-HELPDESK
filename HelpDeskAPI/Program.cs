@@ -10,6 +10,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<HelpDeskContext>(options =>
     options.UseSqlite("Data Source=helpdesk.db"));
 
+// 🌍 Configurar CORS para permitir solicitudes desde el frontend
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // 🛡️ Leer configuración del JWT desde appsettings.json
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
@@ -53,6 +64,9 @@ if (app.Environment.IsDevelopment())
 
 // 🔐 Middleware de HTTPS
 app.UseHttpsRedirection();
+
+// 🌍 Habilitar CORS
+app.UseCors();
 
 // 🔐 Usar autenticación y autorización
 app.UseAuthentication();

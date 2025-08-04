@@ -12,7 +12,7 @@ namespace HelpDeskAPI.Controllers
             // Lógica de autenticación (temporal de prueba)
             if (request.Username == "admin" && request.Password == "1234")
             {
-                return Ok(new { token = "fake-jwt-token" });
+                return Ok(new { token = "fake-jwt-token", role = "Admin" });
             }
 
             return Unauthorized();
