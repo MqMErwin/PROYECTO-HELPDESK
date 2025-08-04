@@ -1,3 +1,5 @@
+using HelpDeskAPI.Data;
+using HelpDeskAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HelpDeskAPI.Controllers
@@ -6,6 +8,13 @@ namespace HelpDeskAPI.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
+        private readonly HelpDeskContext _context;
+
+        public AuthController(HelpDeskContext context)
+        {
+            _context = context;
+        }
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
@@ -16,6 +25,25 @@ namespace HelpDeskAPI.Controllers
             }
 
             return Unauthorized();
+        }
+
+        /// <summary>
+        /// Registra un nuevo usuario en el sistema.
+        /// </summary>
+        /// <param name="user">Datos del usuario a registrar.</param>
+        /// <returns>Usuario creado.</returns>
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] User user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(UsersController.GetUser), "Users", new { id = user.Id }, user);
         }
     }
 
