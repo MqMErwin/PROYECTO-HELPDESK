@@ -44,13 +44,12 @@ namespace HelpDeskAPI.Controllers
         }
 
         // POST: api/users/login
-// POST: api/users/login
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequestUser loginRequest)
         {
             var correo = loginRequest.Correo;
             var contraseña = loginRequest.Contraseña;
-            
+
             var user = _context.Users.FirstOrDefault(u => u.Correo == correo && u.Contraseña == contraseña);
             if (user == null)
             {
@@ -58,7 +57,7 @@ namespace HelpDeskAPI.Controllers
             }
 
             // Aquí puedes agregar la generación de token JWT real, o lo que desees devolver
-            return Ok(new { token = "fake-jwt-token" });
+            return Ok(new { token = "fake-jwt-token", role = user.Rol });
         }
 
 

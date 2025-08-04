@@ -58,9 +58,17 @@ body {
   .login-form button:hover {
     background-color: #005fa3;
   }
-  
+
   .login-error {
     background-color: #ff4d4d;
+    padding: 8px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .login-success {
+    background-color: #4caf50;
     padding: 8px;
     border-radius: 5px;
     text-align: center;

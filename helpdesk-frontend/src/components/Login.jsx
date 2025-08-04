@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import './Login.css'; // Asegúrate de crear este archivo
-import ChatBotWidget from '../components/ChatBotWidget';
 import logoEmi from '../assets/ESCUELA-MILITAR-DE-INGENIERIA.png';
 
 
-export default function Login({ onLogin }) {
+export default function Login({ onLogin, onShowRegister }) {
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
@@ -14,10 +13,10 @@ export default function Login({ onLogin }) {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5131/api/auth/login', {
+      const response = await fetch('http://localhost:5131/api/users/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: correo, password: contrasena })
+        body: JSON.stringify({ correo, contraseña: contrasena })
       });
 
       if (!response.ok) {
@@ -60,6 +59,7 @@ export default function Login({ onLogin }) {
         />
 
         <button type="submit">Entrar</button>
+        <button type="button" onClick={onShowRegister}>Registrarse</button>
       </form>
     </div>
   );
