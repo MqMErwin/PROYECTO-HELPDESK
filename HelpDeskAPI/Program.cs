@@ -23,7 +23,13 @@ builder.Services.AddCors(options =>
 
 // 🛡️ Leer configuración del JWT desde appsettings.json
 var jwtSettings = builder.Configuration.GetSection("Jwt");
-var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
+var keyString = jwtSettings["Key"]
+    ?? throw new InvalidOperationException("JWT Key missing in configuration");
+var issuer = jwtSettings["Issuer"]
+    ?? throw new InvalidOperationException("JWT Issuer missing in configuration");
+var audience = jwtSettings["Audience"]
+    ?? throw new InvalidOperationException("JWT Audience missing in configuration");
+var key = Encoding.ASCII.GetBytes(keyString);
 
 // 🔐 Configurar autenticación JWT
 builder.Services.AddAuthentication(options =>
@@ -41,8 +47,8 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(key),
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidIssuer = jwtSettings["Issuer"],
-        ValidAudience = jwtSettings["Audience"]
+        ValidIssuer = issuer,
+        ValidAudience = audience
     };
 });
 
