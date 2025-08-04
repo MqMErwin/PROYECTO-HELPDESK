@@ -20,7 +20,9 @@ public class AuthService
             new Claim(ClaimTypes.Role, role)
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+        var keyValue = _configuration["Jwt:Key"]
+            ?? throw new InvalidOperationException("JWT Key not configured");
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyValue));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
@@ -34,7 +36,7 @@ public class AuthService
     }
 
     // Aquí validas el usuario, ejemplo simple (debes validar en DB)
-    public bool ValidateUser(string username, string password, out string role)
+    public bool ValidateUser(string username, string password, out string? role)
     {
         // TODO: validar en base de datos
         // Ejemplo duro:
