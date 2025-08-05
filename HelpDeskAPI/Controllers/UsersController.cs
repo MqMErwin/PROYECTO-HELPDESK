@@ -60,6 +60,47 @@ namespace HelpDeskAPI.Controllers
             return Ok(new { token = "fake-jwt-token", role = user.Rol });
         }
 
+        // PUT: api/users/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] User updatedUser)
+        {
+            if (id != updatedUser.Id)
+            {
+                return BadRequest();
+            }
+
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.Nombre = updatedUser.Nombre;
+            user.Correo = updatedUser.Correo;
+            user.Contraseña = updatedUser.Contraseña;
+            user.Rol = updatedUser.Rol;
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        // DELETE: api/users/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
 
 
     }
