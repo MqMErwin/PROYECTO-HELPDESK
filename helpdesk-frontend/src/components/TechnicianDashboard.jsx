@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './TechnicianDashboard.css';
-import { 
+import {
   FiHome,
   FiMessageSquare,
   FiCheckCircle,
@@ -16,6 +16,7 @@ import {
   FiSettings,
   FiFileText
 } from 'react-icons/fi';
+import TicketList from './TicketList';
 
 export default function TechnicianDashboard({ onLogout }) {
   const [notifications] = useState([
@@ -279,6 +280,9 @@ export default function TechnicianDashboard({ onLogout }) {
               </div>
             ))}
           </div>
+          {['tickets', 'new'].includes(activeMenu) && (
+            <TicketList filter={{ tecnicoId: 2 }} currentUserId={2} />
+          )}
         </main>
       </div>
     </div>

@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import './AdminDashboard.css';
-import { 
-  FiSettings, 
-  FiUsers, 
-  FiPieChart, 
-  FiMessageSquare, 
-  FiLogOut, 
+import {
+  FiSettings,
+  FiUsers,
+  FiPieChart,
+  FiMessageSquare,
+  FiLogOut,
   FiBell,
   FiHome,
   FiChevronDown,
   FiMenu,
   FiX
 } from 'react-icons/fi';
+import TicketList from './TicketList';
 
 export default function AdminDashboard({ onLogout }) {
   const [notifications] = useState([
@@ -264,6 +265,9 @@ export default function AdminDashboard({ onLogout }) {
               </div>
             </div>
           </div>
+          {activeMenu === 'tickets' && (
+            <TicketList currentUserId={3} />
+          )}
         </main>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './UserDashboard.css';
-import { 
+import {
   FiHome,
   FiMessageSquare,
   FiCheckCircle,
@@ -17,6 +17,7 @@ import {
   FiFileText,
   FiHelpCircle
 } from 'react-icons/fi';
+import TicketList from './TicketList';
 
 export default function UserDashboard({ onLogout }) {
   const [notifications] = useState([
@@ -280,6 +281,9 @@ export default function UserDashboard({ onLogout }) {
               </div>
             ))}
           </div>
+          {['new-ticket', 'my-tickets'].includes(activeMenu) && (
+            <TicketList filter={{ usuarioId: 1 }} currentUserId={1} />
+          )}
         </main>
       </div>
     </div>
