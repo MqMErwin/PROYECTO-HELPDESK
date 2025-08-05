@@ -18,12 +18,30 @@ namespace HelpDeskAPI.Controllers
 
         // GET: api/tickets
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ticket>>> GetTickets()
+        public async Task<ActionResult<IEnumerable<Ticket>>> GetTickets(
+            [FromQuery] string? estado,
+            [FromQuery] int? usuarioId,
+            [FromQuery] int? tecnicoId)
         {
-            return await _context.Tickets
+            var query = _context.Tickets
                 .Include(t => t.Usuario)
                 .Include(t => t.Tecnico)
-                .ToListAsync();
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(t => t.Estado == estado);
+            }
+            if (usuarioId.HasValue)
+            {
+                query = query.Where(t => t.UsuarioId == usuarioId);
+            }
+            if (tecnicoId.HasValue)
+            {
+                query = query.Where(t => t.TecnicoId == tecnicoId);
+            }
+
+            return await query.ToListAsync();
         }
 
         // GET: api/tickets/5
@@ -48,6 +66,47 @@ namespace HelpDeskAPI.Controllers
             _context.Tickets.Add(ticket);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetTicket), new { id = ticket.Id }, ticket);
+        }
+
+        // PUT: api/tickets/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTicket(int id, [FromBody] Ticket updatedTicket)
+        {
+            if (id != updatedTicket.Id)
+            {
+                return BadRequest();
+            }
+
+            var ticket = await _context.Tickets.FindAsync(id);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            ticket.Titulo = updatedTicket.Titulo;
+            ticket.Descripcion = updatedTicket.Descripcion;
+            ticket.TecnicoId = updatedTicket.TecnicoId;
+            ticket.Estado = updatedTicket.Estado;
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        // DELETE: api/tickets/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTicket(int id)
+        {
+            var ticket = await _context.Tickets.FindAsync(id);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            _context.Tickets.Remove(ticket);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

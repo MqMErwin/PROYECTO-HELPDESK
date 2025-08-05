@@ -34,6 +34,23 @@ namespace HelpDeskAPI.Controllers
         public async Task<ActionResult<ChatMessage>> PostMessage(ChatMessage message)
         {
             message.Timestamp = DateTime.UtcNow;
+
+            if (message.TicketId == 0)
+            {
+                var ticket = new Ticket
+                {
+                    Titulo = message.Mensaje.Length > 50 ? message.Mensaje.Substring(0, 50) : message.Mensaje,
+                    UsuarioId = message.UsuarioId,
+                    Estado = "Abierto",
+                    FechaCreacion = DateTime.UtcNow
+                };
+
+                _context.Tickets.Add(ticket);
+                await _context.SaveChangesAsync();
+
+                message.TicketId = ticket.Id;
+            }
+
             _context.ChatMessages.Add(message);
             await _context.SaveChangesAsync();
 
