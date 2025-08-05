@@ -1,14 +1,31 @@
 import React from 'react';
 
+const API_URL = 'http://localhost:5131/api';
+
 function TicketList({ tickets = [] }) {
-  const handleAssign = (ticketId) => {
-    // TODO: Implement assignment logic (API call)
-    alert(`Assign ticket ${ticketId} to a technician`);
+  const handleAssign = async (ticketId) => {
+    const tecnicoId = prompt('Ingrese el ID del técnico:');
+    if (!tecnicoId) return;
+    await fetch(`${API_URL}/tickets/${ticketId}/assign`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tecnicoId: Number(tecnicoId) })
+    });
+    alert(`Ticket ${ticketId} asignado al técnico ${tecnicoId}`);
   };
 
-  const handleStatusChange = (ticketId, newStatus) => {
-    // TODO: Implement status update logic (API call)
-    alert(`Change status of ticket ${ticketId} to ${newStatus}`);
+  const handleStatusChange = async (ticketId, newStatus) => {
+    if (newStatus === 'Cerrado') {
+      await fetch(`${API_URL}/tickets/${ticketId}/resolve`, { method: 'POST' });
+      alert(`Ticket ${ticketId} resuelto y eliminado`);
+    } else {
+      await fetch(`${API_URL}/tickets/${ticketId}/status`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ estado: newStatus })
+      });
+      alert(`Estado del ticket ${ticketId} actualizado a ${newStatus}`);
+    }
   };
 
   return (

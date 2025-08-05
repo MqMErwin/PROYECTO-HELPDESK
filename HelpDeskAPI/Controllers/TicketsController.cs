@@ -108,5 +108,52 @@ namespace HelpDeskAPI.Controllers
 
             return NoContent();
         }
+
+        // PUT: api/tickets/{id}/assign
+        [HttpPut("{id}/assign")]
+        public async Task<IActionResult> AssignTicket(int id, [FromBody] AssignTicketRequest request)
+        {
+            var ticket = await _context.Tickets.FindAsync(id);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            ticket.TecnicoId = request.TecnicoId;
+            ticket.Estado = "Asignado";
+
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        // PUT: api/tickets/{id}/status
+        [HttpPut("{id}/status")]
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateTicketStatusRequest request)
+        {
+            var ticket = await _context.Tickets.FindAsync(id);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            ticket.Estado = request.Estado;
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        // POST: api/tickets/{id}/resolve
+        [HttpPost("{id}/resolve")]
+        public async Task<IActionResult> ResolveTicket(int id)
+        {
+            var ticket = await _context.Tickets.FindAsync(id);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            _context.Tickets.Remove(ticket);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
     }
 }
