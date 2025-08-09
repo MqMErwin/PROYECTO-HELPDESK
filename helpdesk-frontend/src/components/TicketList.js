@@ -1,41 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 const API_URL = 'http://localhost:5131/api';
 
-function TicketList({ filter = {}, currentUserId }) {
-  const [tickets, setTickets] = useState([]);
-  const [newTicket, setNewTicket] = useState({
-    titulo: '',
-    descripcion: '',
-    usuarioId: currentUserId || ''
-  });
-
-  const fetchTickets = async () => {
-    const params = new URLSearchParams(filter);
-    const response = await fetch(`${API_URL}/tickets?${params.toString()}`);
-    const data = await response.json();
-    setTickets(data);
-  };
-
-  useEffect(() => {
-    fetchTickets();
-  }, [JSON.stringify(filter)]);
-
-  const handleCreate = async (e) => {
-    e.preventDefault();
-    const ticketData = {
-      titulo: newTicket.titulo,
-      descripcion: newTicket.descripcion,
-      usuarioId: currentUserId ?? Number(newTicket.usuarioId)
-    };
-    await fetch(`${API_URL}/tickets`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(ticketData)
-    });
-    setNewTicket({ titulo: '', descripcion: '', usuarioId: currentUserId || '' });
-    fetchTickets();
-  };
+function TicketList({ tickets = [] }) {
   const handleAssign = async (ticketId) => {
     const tecnicoId = prompt('Ingrese el ID del técnico:');
     if (!tecnicoId) return;
@@ -45,7 +12,6 @@ function TicketList({ filter = {}, currentUserId }) {
       body: JSON.stringify({ tecnicoId: Number(tecnicoId) })
     });
     alert(`Ticket ${ticketId} asignado al técnico ${tecnicoId}`);
-    fetchTickets();
   };
 
   const handleStatusChange = async (ticketId, newStatus) => {
@@ -60,37 +26,11 @@ function TicketList({ filter = {}, currentUserId }) {
       });
       alert(`Estado del ticket ${ticketId} actualizado a ${newStatus}`);
     }
-    fetchTickets();
   };
 
   return (
     <div>
       <h2>Lista de Tickets</h2>
-      <form onSubmit={handleCreate} style={{ marginBottom: '1em' }}>
-        <input
-          type="text"
-          placeholder="Título"
-          value={newTicket.titulo}
-          onChange={e => setNewTicket({ ...newTicket, titulo: e.target.value })}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Descripción"
-          value={newTicket.descripcion}
-          onChange={e => setNewTicket({ ...newTicket, descripcion: e.target.value })}
-        />
-        {!currentUserId && (
-          <input
-            type="number"
-            placeholder="ID Usuario"
-            value={newTicket.usuarioId}
-            onChange={e => setNewTicket({ ...newTicket, usuarioId: e.target.value })}
-            required
-          />
-        )}
-        <button type="submit">Crear Ticket</button>
-      </form>
       <ul>
         {tickets.map(ticket => (
           <li key={ticket.id} style={{ marginBottom: '1em' }}>
