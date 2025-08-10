@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Login from './components/Login';
-import UserDashboard from './components/UserDashboard';
-import TechnicianDashboard from './components/TechnicianDashboard';
-import AdminDashboard from './components/AdminDashboard';
+import TicketForm from './components/TicketForm';
+import TicketList from './components/TicketList';
 import ChatBotWidget from './components/ChatBotWidget';
 import Register from './components/Register';
 import './App.css';
@@ -38,10 +37,12 @@ function App() {
     );
   }
 
-  if (rol === 'Usuario') {
+  if (rol === 'Solicitante') {
     return (
       <div>
-        <UserDashboard onLogout={handleLogout} />
+        <button onClick={handleLogout}>Cerrar sesión</button>
+        <TicketForm token={token} />
+        <TicketList token={token} role={rol} />
         <ChatBotWidget />
       </div>
     );
@@ -50,16 +51,18 @@ function App() {
   if (rol === 'Tecnico') {
     return (
       <div>
-        <TechnicianDashboard onLogout={handleLogout} />
+        <button onClick={handleLogout}>Cerrar sesión</button>
+        <TicketList token={token} role={rol} />
         <ChatBotWidget />
       </div>
     );
   }
 
-  if (rol === 'Admin') {
+  if (rol === 'Administrador') {
     return (
       <div>
-        <AdminDashboard onLogout={handleLogout} />
+        <button onClick={handleLogout}>Cerrar sesión</button>
+        <TicketList token={token} role={rol} />
         <ChatBotWidget />
       </div>
     );

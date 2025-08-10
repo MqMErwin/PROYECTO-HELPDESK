@@ -41,7 +41,7 @@ namespace HelpDeskAPI.Controllers
                 {
                     Titulo = message.Mensaje.Length > 50 ? message.Mensaje.Substring(0, 50) : message.Mensaje,
                     UsuarioId = message.UsuarioId,
-                    Estado = "Abierto",
+                    Estado = TicketEstado.Esperando,
                     FechaCreacion = DateTime.UtcNow
                 };
 
