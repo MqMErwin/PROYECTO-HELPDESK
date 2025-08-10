@@ -3,6 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HelpDeskAPI.Models
 {
+    public enum TicketEstado
+    {
+        Esperando,
+        Asignado,
+        EnProgreso,
+        Resuelto
+    }
+
     public class Ticket
     {
         public int Id { get; set; }
@@ -23,7 +31,7 @@ namespace HelpDeskAPI.Models
 
         public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
 
-        public string Estado { get; set; } = "Abierto";
+        public TicketEstado Estado { get; set; } = TicketEstado.Esperando;
 
         // ✅ Relación con mensajes
         public ICollection<ChatMessage> ChatMessages { get; set; } = new List<ChatMessage>();

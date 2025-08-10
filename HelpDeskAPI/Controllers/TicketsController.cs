@@ -1,12 +1,15 @@
 using HelpDeskAPI.Data;
 using HelpDeskAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace HelpDeskAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class TicketsController : ControllerBase
     {
         private readonly HelpDeskContext _context;
@@ -18,27 +21,33 @@ namespace HelpDeskAPI.Controllers
 
         // GET: api/tickets
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ticket>>> GetTickets(
-            [FromQuery] string? estado,
-            [FromQuery] int? usuarioId,
-            [FromQuery] int? tecnicoId)
+        public async Task<ActionResult<IEnumerable<Ticket>>> GetTickets()
         {
+            var role = User.FindFirstValue(ClaimTypes.Role);
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Forbid();
+            }
+
+            int userId = int.Parse(userIdClaim);
+
             var query = _context.Tickets
                 .Include(t => t.Usuario)
                 .Include(t => t.Tecnico)
                 .AsQueryable();
 
-            if (!string.IsNullOrEmpty(estado))
+            if (role == "Administrador")
             {
-                query = query.Where(t => t.Estado == estado);
+                // Admin ve todos
             }
-            if (usuarioId.HasValue)
+            else if (role == "Tecnico")
             {
-                query = query.Where(t => t.UsuarioId == usuarioId);
+                query = query.Where(t => t.TecnicoId == userId);
             }
-            if (tecnicoId.HasValue)
+            else
             {
-                query = query.Where(t => t.TecnicoId == tecnicoId);
+                query = query.Where(t => t.UsuarioId == userId);
             }
 
             return await query.ToListAsync();
@@ -61,8 +70,25 @@ namespace HelpDeskAPI.Controllers
 
         // POST: api/tickets
         [HttpPost]
-        public async Task<ActionResult<Ticket>> CreateTicket(Ticket ticket)
+        [Authorize(Roles = "Solicitante")]
+        public async Task<ActionResult<Ticket>> CreateTicket([FromBody] Ticket ticket)
         {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Forbid();
+            }
+
+            ticket.UsuarioId = int.Parse(userIdClaim);
+            ticket.TecnicoId = null;
+            ticket.Estado = TicketEstado.Esperando;
+            ticket.FechaCreacion = DateTime.UtcNow;
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             _context.Tickets.Add(ticket);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetTicket), new { id = ticket.Id }, ticket);
@@ -70,6 +96,7 @@ namespace HelpDeskAPI.Controllers
 
         // PUT: api/tickets/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> UpdateTicket(int id, [FromBody] Ticket updatedTicket)
         {
             if (id != updatedTicket.Id)
@@ -95,6 +122,7 @@ namespace HelpDeskAPI.Controllers
 
         // DELETE: api/tickets/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> DeleteTicket(int id)
         {
             var ticket = await _context.Tickets.FindAsync(id);
@@ -111,6 +139,7 @@ namespace HelpDeskAPI.Controllers
 
         // PUT: api/tickets/{id}/assign
         [HttpPut("{id}/assign")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> AssignTicket(int id, [FromBody] AssignTicketRequest request)
         {
             var ticket = await _context.Tickets.FindAsync(id);
@@ -120,7 +149,7 @@ namespace HelpDeskAPI.Controllers
             }
 
             ticket.TecnicoId = request.TecnicoId;
-            ticket.Estado = "Asignado";
+            ticket.Estado = TicketEstado.Asignado;
 
             await _context.SaveChangesAsync();
             return NoContent();
@@ -128,6 +157,7 @@ namespace HelpDeskAPI.Controllers
 
         // PUT: api/tickets/{id}/status
         [HttpPut("{id}/status")]
+        [Authorize(Roles = "Tecnico")]
         public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateTicketStatusRequest request)
         {
             var ticket = await _context.Tickets.FindAsync(id);
@@ -143,6 +173,7 @@ namespace HelpDeskAPI.Controllers
 
         // POST: api/tickets/{id}/resolve
         [HttpPost("{id}/resolve")]
+        [Authorize(Roles = "Tecnico,Administrador")]
         public async Task<IActionResult> ResolveTicket(int id)
         {
             var ticket = await _context.Tickets.FindAsync(id);

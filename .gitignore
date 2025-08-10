@@ -1,0 +1,5 @@
+HelpDeskAPI/helpdesk.db
+**/bin/
+**/obj/
+node_modules/
+.env

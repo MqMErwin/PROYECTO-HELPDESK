@@ -13,6 +13,10 @@ namespace HelpDeskAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Ticket>()
+                .Property(t => t.Estado)
+                .HasConversion<string>();
+
             modelBuilder.Entity<User>()
                 .HasMany(u => u.TicketsCreados)
                 .WithOne(t => t.Usuario)
