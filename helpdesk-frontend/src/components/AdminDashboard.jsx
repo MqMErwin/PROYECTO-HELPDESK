@@ -72,9 +72,9 @@ export default function AdminDashboard({ onLogout, token, role }) {
                     </div>
                   ))}
                 </div>
-                <div className="notification-footer">
-                  <a href="#">Ver todas</a>
-                </div>
+              <div className="notification-footer">
+                <button type="button">Ver todas</button>
+              </div>
               </div>
             )}
           </div>
@@ -101,40 +101,35 @@ export default function AdminDashboard({ onLogout, token, role }) {
         <aside className="admin-sidebar">
           <nav>
             <ul>
-              <li 
-                className={activeMenu === 'dashboard' ? 'active' : ''}
-                onClick={() => setActiveMenu('dashboard')}
-              >
-                <FiHome className="icon" />
-                <a href="#">Dashboard</a>
+              <li className={activeMenu === 'dashboard' ? 'active' : ''}>
+                <button type="button" onClick={() => setActiveMenu('dashboard')}>
+                  <FiHome className="icon" />
+                  <span>Dashboard</span>
+                </button>
               </li>
-              <li 
-                className={activeMenu === 'settings' ? 'active' : ''}
-                onClick={() => setActiveMenu('settings')}
-              >
-                <FiSettings className="icon" />
-                <a href="#">Configuración</a>
+              <li className={activeMenu === 'settings' ? 'active' : ''}>
+                <button type="button" onClick={() => setActiveMenu('settings')}>
+                  <FiSettings className="icon" />
+                  <span>Configuración</span>
+                </button>
               </li>
-              <li 
-                className={activeMenu === 'reports' ? 'active' : ''}
-                onClick={() => setActiveMenu('reports')}
-              >
-                <FiPieChart className="icon" />
-                <a href="#">Reportes</a>
+              <li className={activeMenu === 'reports' ? 'active' : ''}>
+                <button type="button" onClick={() => setActiveMenu('reports')}>
+                  <FiPieChart className="icon" />
+                  <span>Reportes</span>
+                </button>
               </li>
-              <li 
-                className={activeMenu === 'tickets' ? 'active' : ''}
-                onClick={() => setActiveMenu('tickets')}
-              >
-                <FiMessageSquare className="icon" />
-                <a href="#">Tickets</a>
+              <li className={activeMenu === 'tickets' ? 'active' : ''}>
+                <button type="button" onClick={() => setActiveMenu('tickets')}>
+                  <FiMessageSquare className="icon" />
+                  <span>Tickets</span>
+                </button>
               </li>
-              <li 
-                className={activeMenu === 'users' ? 'active' : ''}
-                onClick={() => setActiveMenu('users')}
-              >
-                <FiUsers className="icon" />
-                <a href="#">Usuarios</a>
+              <li className={activeMenu === 'users' ? 'active' : ''}>
+                <button type="button" onClick={() => setActiveMenu('users')}>
+                  <FiUsers className="icon" />
+                  <span>Usuarios</span>
+                </button>
               </li>
             </ul>
           </nav>
@@ -142,129 +137,133 @@ export default function AdminDashboard({ onLogout, token, role }) {
 
         {/* Área principal */}
         <main className="admin-main">
-          <div className="welcome-section">
-            <h2>Bienvenido, <span>Administrador</span></h2>
-            <p className="last-access">Último acceso: Hoy a las {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
-          </div>
-          
-          {/* Estadísticas rápidas */}
-          <div className="quick-stats">
-            <div className="stat-card">
-              <div className="stat-icon users-stat">
-                <FiUsers />
+          {activeMenu === 'dashboard' && (
+            <>
+              <div className="welcome-section">
+                <h2>Bienvenido, <span>Administrador</span></h2>
+                <p className="last-access">Último acceso: Hoy a las {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
               </div>
-              <div className="stat-info">
-                <span className="stat-value">1,245</span>
-                <span className="stat-label">Usuarios</span>
-              </div>
-            </div>
-            
-            <div className="stat-card">
-              <div className="stat-icon tickets-stat">
-                <FiMessageSquare />
-              </div>
-              <div className="stat-info">
-                <span className="stat-value">42</span>
-                <span className="stat-label">Tickets activos</span>
-              </div>
-            </div>
-            
-            <div className="stat-card">
-              <div className="stat-icon solved-stat">
-                <FiMessageSquare />
-              </div>
-              <div className="stat-info">
-                <span className="stat-value">128</span>
-                <span className="stat-label">Resueltos</span>
-              </div>
-            </div>
-            
-            <div className="stat-card">
-              <div className="stat-icon satisfaction-stat">
-                <FiPieChart />
-              </div>
-              <div className="stat-info">
-                <span className="stat-value">92%</span>
-                <span className="stat-label">Satisfacción</span>
-              </div>
-            </div>
-          </div>
-          
-          {/* Tarjetas de acción */}
-          <div className="section-title">
-            <h3>Acciones rápidas</h3>
-            <a href="#" className="view-all">Ver todo</a>
-          </div>
-          
-          <div className="card-container">
-            <div className="admin-card config-card">
-              <div className="card-icon">
-                <FiSettings />
-              </div>
-              <h3>Configurar Sistema</h3>
-              <p>Administrar roles y categorías del sistema.</p>
-              <button className="card-button" onClick={() => setActiveMenu('settings')}>Ir a Configuración</button>
-            </div>
 
-            <div className="admin-card reports-card">
-              <div className="card-icon">
-                <FiPieChart />
-              </div>
-              <h3>Ver Reportes</h3>
-              <p>Visualizar estadísticas de tickets y rendimiento.</p>
-              <button className="card-button" onClick={() => setActiveMenu('reports')}>Ver Reportes</button>
-            </div>
+              {/* Estadísticas rápidas */}
+              <div className="quick-stats">
+                <div className="stat-card">
+                  <div className="stat-icon users-stat">
+                    <FiUsers />
+                  </div>
+                  <div className="stat-info">
+                    <span className="stat-value">1,245</span>
+                    <span className="stat-label">Usuarios</span>
+                  </div>
+                </div>
 
-            <div className="admin-card tickets-card">
-              <div className="card-icon">
-                <FiMessageSquare />
-              </div>
-              <h3>Asignar Tickets</h3>
-              <p>Asignar solicitudes a técnicos disponibles.</p>
-              <button className="card-button" onClick={() => setActiveMenu('tickets')}>Asignar Tickets</button>
-            </div>
+                <div className="stat-card">
+                  <div className="stat-icon tickets-stat">
+                    <FiMessageSquare />
+                  </div>
+                  <div className="stat-info">
+                    <span className="stat-value">42</span>
+                    <span className="stat-label">Tickets activos</span>
+                  </div>
+                </div>
 
-            <div className="admin-card users-card">
-              <div className="card-icon">
-                <FiUsers />
+                <div className="stat-card">
+                  <div className="stat-icon solved-stat">
+                    <FiMessageSquare />
+                  </div>
+                  <div className="stat-info">
+                    <span className="stat-value">128</span>
+                    <span className="stat-label">Resueltos</span>
+                  </div>
+                </div>
+
+                <div className="stat-card">
+                  <div className="stat-icon satisfaction-stat">
+                    <FiPieChart />
+                  </div>
+                  <div className="stat-info">
+                    <span className="stat-value">92%</span>
+                    <span className="stat-label">Satisfacción</span>
+                  </div>
+                </div>
               </div>
-              <h3>Gestionar Usuarios</h3>
-              <p>Agregar, editar y eliminar cuentas de usuarios.</p>
-              <button className="card-button" onClick={() => setActiveMenu('users')}>Gestionar Usuarios</button>
-            </div>
-          </div>
-          
-          {/* Actividad reciente */}
-          <div className="section-title">
-            <h3>Actividad reciente</h3>
-            <a href="#" className="view-all">Ver todo</a>
-          </div>
-          
-          <div className="recent-activity">
-            <div className="activity-item">
-              <div className="activity-dot"></div>
-              <div className="activity-content">
-                <p>Nuevo usuario registrado: <strong>María González</strong></p>
-                <span className="activity-time">Hace 15 minutos</span>
+
+              {/* Tarjetas de acción */}
+              <div className="section-title">
+                <h3>Acciones rápidas</h3>
+                <button type="button" className="view-all">Ver todo</button>
               </div>
-            </div>
-            
-            <div className="activity-item">
-              <div className="activity-dot"></div>
-              <div className="activity-content">
-                <p>Ticket <strong>#TKT-00425</strong> asignado a técnico</p>
-                <span className="activity-time">Hace 32 minutos</span>
+
+              <div className="card-container">
+                <div className="admin-card config-card">
+                  <div className="card-icon">
+                    <FiSettings />
+                  </div>
+                  <h3>Configurar Sistema</h3>
+                  <p>Administrar roles y categorías del sistema.</p>
+                  <button className="card-button" onClick={() => setActiveMenu('settings')}>Ir a Configuración</button>
+                </div>
+
+                <div className="admin-card reports-card">
+                  <div className="card-icon">
+                    <FiPieChart />
+                  </div>
+                  <h3>Ver Reportes</h3>
+                  <p>Visualizar estadísticas de tickets y rendimiento.</p>
+                  <button className="card-button" onClick={() => setActiveMenu('reports')}>Ver Reportes</button>
+                </div>
+
+                <div className="admin-card tickets-card">
+                  <div className="card-icon">
+                    <FiMessageSquare />
+                  </div>
+                  <h3>Asignar Tickets</h3>
+                  <p>Asignar solicitudes a técnicos disponibles.</p>
+                  <button className="card-button" onClick={() => setActiveMenu('tickets')}>Asignar Tickets</button>
+                </div>
+
+                <div className="admin-card users-card">
+                  <div className="card-icon">
+                    <FiUsers />
+                  </div>
+                  <h3>Gestionar Usuarios</h3>
+                  <p>Agregar, editar y eliminar cuentas de usuarios.</p>
+                  <button className="card-button" onClick={() => setActiveMenu('users')}>Gestionar Usuarios</button>
+                </div>
               </div>
-            </div>
-            
-            <div className="activity-item">
-              <div className="activity-dot"></div>
-              <div className="activity-content">
-                <p>Reporte mensual generado automáticamente</p>
-                <span className="activity-time">Hace 2 horas</span>
+
+              {/* Actividad reciente */}
+              <div className="section-title">
+                <h3>Actividad reciente</h3>
+                <button type="button" className="view-all">Ver todo</button>
               </div>
-            </div>
-          </div>
+
+              <div className="recent-activity">
+                <div className="activity-item">
+                  <div className="activity-dot"></div>
+                  <div className="activity-content">
+                    <p>Nuevo usuario registrado: <strong>María González</strong></p>
+                    <span className="activity-time">Hace 15 minutos</span>
+                  </div>
+                </div>
+
+                <div className="activity-item">
+                  <div className="activity-dot"></div>
+                  <div className="activity-content">
+                    <p>Ticket <strong>#TKT-00425</strong> asignado a técnico</p>
+                    <span className="activity-time">Hace 32 minutos</span>
+                  </div>
+                </div>
+
+                <div className="activity-item">
+                  <div className="activity-dot"></div>
+                  <div className="activity-content">
+                    <p>Reporte mensual generado automáticamente</p>
+                    <span className="activity-time">Hace 2 horas</span>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
           {activeMenu === 'tickets' && (
             <TicketList token={token} role={role} />
           )}
@@ -272,10 +271,10 @@ export default function AdminDashboard({ onLogout, token, role }) {
             <div className="placeholder">Gestión de usuarios en construcción</div>
           )}
           {activeMenu === 'settings' && (
-            <div className="placeholder">Configuración del sistema</div>
+            <div className="placeholder">Configuración del sistema en construcción</div>
           )}
           {activeMenu === 'reports' && (
-            <div className="placeholder">Reportes del sistema</div>
+            <div className="placeholder">Reportes del sistema en construcción</div>
           )}
         </main>
       </div>

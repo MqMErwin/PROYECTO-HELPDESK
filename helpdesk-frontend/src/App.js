@@ -42,34 +42,25 @@ function App() {
     );
   }
 
-  if (rol === 'Solicitante') {
-    return (
-      <>
-        <UserDashboard onLogout={handleLogout} token={token} role={rol} />
-        <ChatBotWidget />
-      </>
-    );
+const renderDashboard = () => {
+  switch (rol) {
+    case 'Administrador':
+      return <AdminDashboard onLogout={handleLogout} token={token} role={rol} />;
+    case 'Tecnico':
+      return <TechnicianDashboard onLogout={handleLogout} token={token} role={rol} />;
+    case 'Solicitante':
+      return <UserDashboard onLogout={handleLogout} token={token} role={rol} />;
+    default:
+      return null;
   }
+};
 
-  if (rol === 'Tecnico') {
-    return (
-      <>
-        <TechnicianDashboard onLogout={handleLogout} token={token} role={rol} />
-        <ChatBotWidget />
-      </>
-    );
-  }
-
-  if (rol === 'Administrador') {
-    return (
-      <>
-        <AdminDashboard onLogout={handleLogout} token={token} role={rol} />
-        <ChatBotWidget />
-      </>
-    );
-  }
-
-  return <div>No tienes permisos</div>;
+  return (
+    <>
+      {renderDashboard()}
+      <ChatBotWidget />
+    </>
+  );
 }
 
 export default App;
