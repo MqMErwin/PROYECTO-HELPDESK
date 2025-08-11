@@ -91,9 +91,9 @@ export default function TechnicianDashboard({ onLogout, token, role }) {
                     </div>
                   ))}
                 </div>
-                <div className="notification-footer">
-                  <a href="#">Ver todas</a>
-                </div>
+              <div className="notification-footer">
+                <button type="button">Ver todas</button>
+              </div>
               </div>
             )}
           </div>
@@ -120,40 +120,35 @@ export default function TechnicianDashboard({ onLogout, token, role }) {
         <aside className="tech-sidebar">
           <nav>
             <ul>
-              <li 
-                className={activeMenu === 'dashboard' ? 'active' : ''}
-                onClick={() => setActiveMenu('dashboard')}
-              >
-                <FiHome className="icon" />
-                <a href="#">Dashboard</a>
+              <li className={activeMenu === 'dashboard' ? 'active' : ''}>
+                <button type="button" onClick={() => setActiveMenu('dashboard')}>
+                  <FiHome className="icon" />
+                  <span>Dashboard</span>
+                </button>
               </li>
-              <li 
-                className={activeMenu === 'tickets' ? 'active' : ''}
-                onClick={() => setActiveMenu('tickets')}
-              >
-                <FiMessageSquare className="icon" />
-                <a href="#">Mis Tickets</a>
+              <li className={activeMenu === 'tickets' ? 'active' : ''}>
+                <button type="button" onClick={() => setActiveMenu('tickets')}>
+                  <FiMessageSquare className="icon" />
+                  <span>Mis Tickets</span>
+                </button>
               </li>
-              <li 
-                className={activeMenu === 'new' ? 'active' : ''}
-                onClick={() => setActiveMenu('new')}
-              >
-                <FiPlus className="icon" />
-                <a href="#">Nuevo Reporte</a>
+              <li className={activeMenu === 'new' ? 'active' : ''}>
+                <button type="button" onClick={() => setActiveMenu('new')}>
+                  <FiPlus className="icon" />
+                  <span>Nuevo Reporte</span>
+                </button>
               </li>
-              <li 
-                className={activeMenu === 'history' ? 'active' : ''}
-                onClick={() => setActiveMenu('history')}
-              >
-                <FiFileText className="icon" />
-                <a href="#">Historial</a>
+              <li className={activeMenu === 'history' ? 'active' : ''}>
+                <button type="button" onClick={() => setActiveMenu('history')}>
+                  <FiFileText className="icon" />
+                  <span>Historial</span>
+                </button>
               </li>
-              <li 
-                className={activeMenu === 'settings' ? 'active' : ''}
-                onClick={() => setActiveMenu('settings')}
-              >
-                <FiSettings className="icon" />
-                <a href="#">Configuración</a>
+              <li className={activeMenu === 'settings' ? 'active' : ''}>
+                <button type="button" onClick={() => setActiveMenu('settings')}>
+                  <FiSettings className="icon" />
+                  <span>Configuración</span>
+                </button>
               </li>
             </ul>
           </nav>
@@ -161,131 +156,141 @@ export default function TechnicianDashboard({ onLogout, token, role }) {
 
         {/* Área principal */}
         <main className="tech-main">
-          <div className="welcome-section">
-            <h2>Bienvenido, <span>Técnico</span></h2>
-            <p className="last-access">Último acceso: Hoy a las {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
-          </div>
-          
-          {/* Estadísticas rápidas */}
-          <div className="quick-stats">
-            <div className="stat-card">
-              <div className="stat-icon assigned-stat">
-                <FiMessageSquare />
+          {activeMenu === 'dashboard' && (
+            <>
+              <div className="welcome-section">
+                <h2>Bienvenido, <span>Técnico</span></h2>
+                <p className="last-access">Último acceso: Hoy a las {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
               </div>
-              <div className="stat-info">
-                <span className="stat-value">{ticketStats.assigned}</span>
-                <span className="stat-label">Asignados</span>
-              </div>
-            </div>
-            
-            <div className="stat-card">
-              <div className="stat-icon progress-stat">
-                <FiClock />
-              </div>
-              <div className="stat-info">
-                <span className="stat-value">{ticketStats.inProgress}</span>
-                <span className="stat-label">En progreso</span>
-              </div>
-            </div>
-            
-            <div className="stat-card">
-              <div className="stat-icon resolved-stat">
-                <FiCheckCircle />
-              </div>
-              <div className="stat-info">
-                <span className="stat-value">{ticketStats.resolved}</span>
-                <span className="stat-label">Resueltos</span>
-              </div>
-            </div>
-            
-            <div className="stat-card">
-              <div className="stat-icon overdue-stat">
-                <FiAlertCircle />
-              </div>
-              <div className="stat-info">
-                <span className="stat-value">{ticketStats.overdue}</span>
-                <span className="stat-label">Vencidos</span>
-              </div>
-            </div>
-          </div>
-          
-          {/* Tarjetas de acción */}
-          <div className="section-title">
-            <h3>Acciones rápidas</h3>
-            <a href="#" className="view-all">Ver todo</a>
-          </div>
-          
-          <div className="card-container">
-            <div className="tech-card tickets-card">
-              <div className="card-icon">
-                <FiMessageSquare />
-              </div>
-              <h3>Ver Tickets Asignados</h3>
-              <p>Revisa los tickets que te han sido asignados para atención.</p>
-              <button className="card-button" onClick={() => setActiveMenu('tickets')}>Ver Tickets</button>
-            </div>
 
-            <div className="tech-card update-card">
-              <div className="card-icon">
-                <FiCheckCircle />
-              </div>
-              <h3>Actualizar Estados</h3>
-              <p>Marca los tickets como en progreso o resueltos.</p>
-              <button className="card-button" onClick={() => setActiveMenu('tickets')}>Actualizar</button>
-            </div>
+              {/* Estadísticas rápidas */}
+              <div className="quick-stats">
+                <div className="stat-card">
+                  <div className="stat-icon assigned-stat">
+                    <FiMessageSquare />
+                  </div>
+                  <div className="stat-info">
+                    <span className="stat-value">{ticketStats.assigned}</span>
+                    <span className="stat-label">Asignados</span>
+                  </div>
+                </div>
 
-            <div className="tech-card new-card">
-              <div className="card-icon">
-                <FiPlus />
-              </div>
-              <h3>Crear Reporte</h3>
-              <p>Genera un nuevo reporte de incidencia o solicitud.</p>
-              <button className="card-button" onClick={() => setActiveMenu('new')}>Nuevo Reporte</button>
-            </div>
-          </div>
-          
-          {/* Tickets recientes */}
-          <div className="section-title">
-            <h3>Tickets Recientes</h3>
-            <a href="#" className="view-all">Ver todos</a>
-          </div>
-          
-          <div className="tickets-table">
-            <div className="table-header">
-              <div className="header-item">ID Ticket</div>
-              <div className="header-item">Descripción</div>
-              <div className="header-item">Estado</div>
-              <div className="header-item">Prioridad</div>
-              <div className="header-item">Tiempo</div>
-              <div className="header-item">Acciones</div>
-            </div>
-            
-            {recentTickets.map(ticket => (
-              <div className="table-row" key={ticket.id}>
-                <div className="row-item">{ticket.id}</div>
-                <div className="row-item">{ticket.title}</div>
-                <div className="row-item">
-                  <span className={`status-badge ${ticket.status.toLowerCase().replace(' ', '-')}`}>
-                    {ticket.status}
-                  </span>
+                <div className="stat-card">
+                  <div className="stat-icon progress-stat">
+                    <FiClock />
+                  </div>
+                  <div className="stat-info">
+                    <span className="stat-value">{ticketStats.inProgress}</span>
+                    <span className="stat-label">En progreso</span>
+                  </div>
                 </div>
-                <div className="row-item">
-                  <span className={`priority-badge ${ticket.priority.toLowerCase()}`}>
-                    {ticket.priority}
-                  </span>
+
+                <div className="stat-card">
+                  <div className="stat-icon resolved-stat">
+                    <FiCheckCircle />
+                  </div>
+                  <div className="stat-info">
+                    <span className="stat-value">{ticketStats.resolved}</span>
+                    <span className="stat-label">Resueltos</span>
+                  </div>
                 </div>
-                <div className="row-item">{ticket.time}</div>
-                <div className="row-item">
-                  <button className="action-button">Ver</button>
+
+                <div className="stat-card">
+                  <div className="stat-icon overdue-stat">
+                    <FiAlertCircle />
+                  </div>
+                  <div className="stat-info">
+                    <span className="stat-value">{ticketStats.overdue}</span>
+                    <span className="stat-label">Vencidos</span>
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
+
+              {/* Tarjetas de acción */}
+              <div className="section-title">
+                <h3>Acciones rápidas</h3>
+                <button type="button" className="view-all">Ver todo</button>
+              </div>
+
+              <div className="card-container">
+                <div className="tech-card tickets-card">
+                  <div className="card-icon">
+                    <FiMessageSquare />
+                  </div>
+                  <h3>Ver Tickets Asignados</h3>
+                  <p>Revisa los tickets que te han sido asignados para atención.</p>
+                  <button className="card-button" onClick={() => setActiveMenu('tickets')}>Ver Tickets</button>
+                </div>
+
+                <div className="tech-card update-card">
+                  <div className="card-icon">
+                    <FiCheckCircle />
+                  </div>
+                  <h3>Actualizar Estados</h3>
+                  <p>Marca los tickets como en progreso o resueltos.</p>
+                  <button className="card-button" onClick={() => setActiveMenu('tickets')}>Actualizar</button>
+                </div>
+
+                <div className="tech-card new-card">
+                  <div className="card-icon">
+                    <FiPlus />
+                  </div>
+                  <h3>Crear Reporte</h3>
+                  <p>Genera un nuevo reporte de incidencia o solicitud.</p>
+                  <button className="card-button" onClick={() => setActiveMenu('new')}>Nuevo Reporte</button>
+                </div>
+              </div>
+
+              {/* Tickets recientes */}
+              <div className="section-title">
+                <h3>Tickets Recientes</h3>
+                <button type="button" className="view-all">Ver todos</button>
+              </div>
+
+              <div className="tickets-table">
+                <div className="table-header">
+                  <div className="header-item">ID Ticket</div>
+                  <div className="header-item">Descripción</div>
+                  <div className="header-item">Estado</div>
+                  <div className="header-item">Prioridad</div>
+                  <div className="header-item">Tiempo</div>
+                  <div className="header-item">Acciones</div>
+                </div>
+
+                {recentTickets.map(ticket => (
+                  <div className="table-row" key={ticket.id}>
+                    <div className="row-item">{ticket.id}</div>
+                    <div className="row-item">{ticket.title}</div>
+                    <div className="row-item">
+                      <span className={`status-badge ${ticket.status.toLowerCase().replace(' ', '-')}`}>
+                        {ticket.status}
+                      </span>
+                    </div>
+                    <div className="row-item">
+                      <span className={`priority-badge ${ticket.priority.toLowerCase()}`}>
+                        {ticket.priority}
+                      </span>
+                    </div>
+                    <div className="row-item">{ticket.time}</div>
+                    <div className="row-item">
+                      <button className="action-button">Ver</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
           {activeMenu === 'tickets' && (
             <TicketList token={token} role={role} />
           )}
           {activeMenu === 'new' && (
             <TicketForm token={token} />
+          )}
+          {activeMenu === 'history' && (
+            <div className="placeholder">Historial en construcción</div>
+          )}
+          {activeMenu === 'settings' && (
+            <div className="placeholder">Configuración en construcción</div>
           )}
         </main>
       </div>
