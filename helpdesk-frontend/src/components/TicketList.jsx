@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import TicketForm from './TicketForm';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5131/api';
 
 function TicketList({ token, role }) {
   const [tickets, setTickets] = useState([]);
 
-  useEffect(() => {
-    const fetchTickets = async () => {
-      const response = await fetch(`${API_URL}/tickets`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setTickets(data);
+  const fetchTickets = async () => {
+    const response = await fetch(`${API_URL}/tickets`, {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
-    };
+    });
+    if (response.ok) {
+      const data = await response.json();
+      setTickets(data);
+    }
+  };
+
+  useEffect(() => {
     fetchTickets();
   }, [token]);
 
@@ -31,7 +33,7 @@ function TicketList({ token, role }) {
       },
       body: JSON.stringify({ tecnicoId: Number(tecnicoId) })
     });
-    alert('Ticket asignado');
+    fetchTickets();
   };
 
   const handleStatusChange = async (ticketId, newStatus) => {
@@ -43,7 +45,37 @@ function TicketList({ token, role }) {
       },
       body: JSON.stringify({ estado: newStatus })
     });
-    alert('Estado actualizado');
+    fetchTickets();
+  };
+
+  const handleEdit = async (ticket) => {
+    const titulo = prompt('Nuevo título:', ticket.titulo);
+    if (titulo === null) return;
+    const descripcion = prompt('Nueva descripción:', ticket.descripcion) || '';
+    await fetch(`${API_URL}/tickets/${ticket.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        id: ticket.id,
+        titulo,
+        descripcion,
+        tecnicoId: ticket.tecnicoId,
+        estado: ticket.estado
+      })
+    });
+    fetchTickets();
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('Eliminar ticket?')) return;
+    await fetch(`${API_URL}/tickets/${id}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    fetchTickets();
   };
 
   const estados = [
@@ -56,12 +88,17 @@ function TicketList({ token, role }) {
   return (
     <div>
       <h2>Tickets</h2>
+      {role === 'Administrador' && <TicketForm token={token} onCreated={fetchTickets} />}
       <ul>
         {tickets.map(ticket => (
           <li key={ticket.id} style={{ marginBottom: '1em' }}>
             <strong>{ticket.titulo}</strong> - {ticket.estado}
             {role === 'Administrador' && (
-              <button onClick={() => handleAssign(ticket.id)}>Asignar</button>
+              <>
+                <button onClick={() => handleAssign(ticket.id)}>Asignar</button>
+                <button onClick={() => handleEdit(ticket)}>Editar</button>
+                <button onClick={() => handleDelete(ticket.id)}>Eliminar</button>
+              </>
             )}
             {role === 'Tecnico' && (
               <select

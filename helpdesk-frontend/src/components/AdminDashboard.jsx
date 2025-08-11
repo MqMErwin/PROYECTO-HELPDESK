@@ -13,6 +13,7 @@ import {
   FiX
 } from 'react-icons/fi';
 import TicketList from './TicketList';
+import UserManagement from './UserManagement';
 
 export default function AdminDashboard({ onLogout, token, role }) {
   const [notifications] = useState([
@@ -267,9 +268,7 @@ export default function AdminDashboard({ onLogout, token, role }) {
           {activeMenu === 'tickets' && (
             <TicketList token={token} role={role} />
           )}
-          {activeMenu === 'users' && (
-            <div className="placeholder">Gestión de usuarios en construcción</div>
-          )}
+          {activeMenu === 'users' && (<UserManagement token={token} />)}
           {activeMenu === 'settings' && (
             <div className="placeholder">Configuración del sistema en construcción</div>
           )}

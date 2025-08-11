@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import Login from './components/Login';
 import ChatBotWidget from './components/ChatBotWidget';
 import Register from './components/Register';
-import Dashboard from './components/Dashboard';
+import AdminDashboard from './components/AdminDashboard';
+import TechnicianDashboard from './components/TechnicianDashboard';
+import UserDashboard from './components/UserDashboard';
 import './App.css';
 
 function App() {
@@ -40,31 +42,22 @@ function App() {
     );
   }
 
-const renderDashboard = () => {
-  switch (rol) {
-    case 'Administrador':
-      return <AdminDashboard onLogout={handleLogout} token={token} role={rol} />;
-    case 'Tecnico':
-      return <TechnicianDashboard onLogout={handleLogout} token={token} role={rol} />;
-const renderDashboard = () => {
-  switch (rol) {
-    case 'Administrador':
-      return <AdminDashboard onLogout={handleLogout} token={token} role={rol} />;
-    case 'Tecnico':
-      return <TechnicianDashboard onLogout={handleLogout} token={token} role={rol} />;
-    case 'Solicitante':
-      return <UserDashboard onLogout={handleLogout} token={token} role={rol} />;
-    default:
-      return null; // O mostrar algo por defecto si el rol es inválido
-  }
-};
+  const renderDashboard = () => {
+    switch (rol) {
+      case 'Administrador':
+        return <AdminDashboard onLogout={handleLogout} token={token} role={rol} />;
+      case 'Tecnico':
+        return <TechnicianDashboard onLogout={handleLogout} token={token} role={rol} />;
+      case 'Solicitante':
+        return <UserDashboard onLogout={handleLogout} token={token} role={rol} />;
+      default:
+        return null;
+    }
+  };
 
-return (
-  <>
-    {renderDashboard()}
-  </>
-);
- main
+  return (
+    <>
+      {renderDashboard()}
       <ChatBotWidget />
     </>
   );
