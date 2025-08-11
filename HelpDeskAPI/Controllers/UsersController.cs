@@ -22,7 +22,7 @@ namespace HelpDeskAPI.Controllers
         {
             if (string.IsNullOrWhiteSpace(user.Rol))
             {
-                user.Rol = "Solicitante";
+                user.Rol = "Administrador";
             }
 
             _context.Users.Add(user);
