@@ -99,6 +99,8 @@ slots:
   fecha_actualizacion:
     type: text
     influence_conversation: false
+    mappings:
+    - type: custom
 
 actions:
   - action_validar_problema
