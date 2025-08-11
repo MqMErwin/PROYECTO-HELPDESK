@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import './Login.css'; // Asegúrate de crear este archivo
+import './Login.css';
 import logoEmi from '../assets/ESCUELA-MILITAR-DE-INGENIERIA.png';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5131/api';
 
 
 export default function Login({ onLogin, onShowRegister }) {
@@ -12,12 +13,12 @@ export default function Login({ onLogin, onShowRegister }) {
     e.preventDefault();
     setError('');
 
-    try {
-      const response = await fetch('http://localhost:5131/api/users/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ correo, contrasena })
-      });
+      try {
+        const response = await fetch(`${API_URL}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ correo, contrasena })
+        });
 
       if (!response.ok) {
         setError('Credenciales inválidas');

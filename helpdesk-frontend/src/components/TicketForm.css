@@ -1,0 +1,49 @@
+.ticket-form {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  max-width: 500px;
+}
+
+.ticket-form h2 {
+  margin-bottom: 1rem;
+  color: var(--emi-blue);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--gray-light);
+  border-radius: 6px;
+  background-color: #fff;
+  color: var(--dark);
+}
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.ticket-form button {
+  background-color: var(--emi-blue);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.ticket-form button:hover {
+  background-color: var(--emi-blue-dark);
+}
+
+.form-message {
+  margin-top: 1rem;
+}

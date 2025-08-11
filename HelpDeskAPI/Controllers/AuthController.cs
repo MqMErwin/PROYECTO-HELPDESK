@@ -2,6 +2,10 @@ using HelpDeskAPI.Data;
 using HelpDeskAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
 
 namespace HelpDeskAPI.Controllers
 {
@@ -10,10 +14,12 @@ namespace HelpDeskAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly HelpDeskContext _context;
+        private readonly IConfiguration _configuration;
 
-        public AuthController(HelpDeskContext context)
+        public AuthController(HelpDeskContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         [HttpPost("login")]
@@ -27,7 +33,25 @@ namespace HelpDeskAPI.Controllers
                 return Unauthorized();
             }
 
-            return Ok(new { token = "fake-jwt-token", role = user.Rol });
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Nombre),
+                new Claim(ClaimTypes.Role, user.Rol)
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ?? string.Empty));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(3),
+                signingCredentials: creds
+            );
+
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            return Ok(new { token = tokenString, role = user.Rol });
         }
 
         /// <summary>
