@@ -43,6 +43,11 @@ namespace HelpDeskAPI.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (string.IsNullOrWhiteSpace(user.Rol))
+            {
+                user.Rol = "Administrador";
+            }
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 

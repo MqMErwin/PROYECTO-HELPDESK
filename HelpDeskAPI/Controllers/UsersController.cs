@@ -20,6 +20,11 @@ namespace HelpDeskAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] User user)
         {
+            if (string.IsNullOrWhiteSpace(user.Rol))
+            {
+                user.Rol = "Administrador";
+            }
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
