@@ -6,3 +6,8 @@ rules:
   steps:
   - intent: despedirse
   - action: utter_despedirse
+
+- rule: Responder preguntas frecuentes
+  steps:
+  - intent: preguntas_frecuentes
+  - action: action_responder_faq

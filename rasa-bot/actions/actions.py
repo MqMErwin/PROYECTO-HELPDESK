@@ -6,42 +6,46 @@ from datetime import datetime
 import random
 import requests
 
+# Base de conocimiento de equipos válidos y su categoría
+EQUIPOS_VALIDOS = {
+    "proyector": "equipo audiovisual",
+    "cañón proyector": "equipo audiovisual",
+    "computadora": "equipo informático",
+    "impresora": "equipo periférico",
+    "internet": "conectividad",
+    "servidor": "infraestructura",
+    "aire acondicionado": "climatización",
+    "software": "aplicación",
+}
+
 class ActionValidarProblema(Action):
     def name(self) -> Text:
         return "action_validar_problema"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
         equipo = tracker.get_slot("equipo")
         ubicacion = tracker.get_slot("ubicacion")
 
-        # Base de conocimiento de equipos y ubicaciones
-        equipos_validos = {
-            "proyector": "equipo audiovisual",
-            "cañón proyector": "equipo audiovisual",
-            "computadora": "equipo informático",
-            "impresora": "equipo periférico",
-            "internet": "conectividad",
-            "servidor": "infraestructura",
-            "aire acondicionado": "climatización",
-            "software": "aplicación"
-        }
-        
+        # Lista de ubicaciones aceptadas
         ubicaciones_validas = ["aula", "laboratorio", "oficina", "sala", "auditorio"]
 
         # Validación de equipo
         if equipo:
             equipo_normalizado = next(
-                (k for k in equipos_validos if k in equipo.lower()),
+                (k for k in EQUIPOS_VALIDOS if k in equipo.lower()),
                 None
             )
-            
+
             if not equipo_normalizado:
                 dispatcher.utter_message(
                     text=f"Lo siento, no reconozco el equipo '{equipo}'. "
-                         f"Los equipos válidos son: {', '.join(equipos_validos.keys())}"
+                         f"Los equipos válidos son: {', '.join(EQUIPOS_VALIDOS.keys())}"
                 )
                 return [SlotSet("equipo", None)]
             
@@ -74,22 +78,24 @@ class ActionCrearTicket(Action):
         
         # Generar número de ticket (en producción usar API)
         num_ticket = f"HD-{random.randint(1000, 9999)}-{datetime.now().strftime('%m%d')}"
-        
         # Simular categorización
         categorias = {
             "equipo audiovisual": "AUD",
             "equipo informático": "INF",
             "conectividad": "RED",
             "infraestructura": "INFRA",
-            "climatización": "CLIM"
+            "climatización": "CLIM",
         }
-        
-        categoria = categorias.get(
-            next(
-                (v for k, v in equipos_validos.items() if k in equipo.lower()),
-                "GEN"
+
+        categoria = "GEN"
+        if equipo:
+            categoria = categorias.get(
+                next(
+                    (v for k, v in EQUIPOS_VALIDOS.items() if k in equipo.lower()),
+                    "GEN",
+                ),
+                "GEN",
             )
-        )
         
         # Conectar con API real (ejemplo comentado)
         """
