@@ -68,4 +68,8 @@ stories:
     - action: action_responder_faq
     - intent: registrar_problema
     - action: utter_pedir_detalles
-    - intent: registrar
+    - intent: registrar_problema
+    - action: action_crear_ticket
+    - action: utter_confirmar_ticket
+    - intent: despedirse
+    - action: utter_despedirse
