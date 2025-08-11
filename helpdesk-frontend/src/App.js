@@ -10,6 +10,7 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem('token') || null);
   const [rol, setRol] = useState(localStorage.getItem('rol') || null);
   const [showRegister, setShowRegister] = useState(false);
+  const validRoles = ['Solicitante', 'Tecnico', 'Administrador'];
 
   const handleLogin = (token, rol) => {
     setToken(token);
@@ -24,7 +25,7 @@ function App() {
     localStorage.clear();
   };
 
-  if (!token) {
+  if (!token || !validRoles.includes(rol)) {
     return (
       <div>
         {showRegister ? (
