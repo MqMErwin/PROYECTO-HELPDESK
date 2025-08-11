@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Login from './components/Login';
-import TicketForm from './components/TicketForm';
-import TicketList from './components/TicketList';
 import ChatBotWidget from './components/ChatBotWidget';
 import Register from './components/Register';
+import AdminDashboard from './components/AdminDashboard';
+import TechnicianDashboard from './components/TechnicianDashboard';
+import UserDashboard from './components/UserDashboard';
 import './App.css';
 
 function App() {
@@ -13,10 +14,13 @@ function App() {
   const validRoles = ['Solicitante', 'Tecnico', 'Administrador'];
 
   const handleLogin = (token, rol) => {
+    const normalizedRole = rol
+      ? rol.charAt(0).toUpperCase() + rol.slice(1).toLowerCase()
+      : '';
     setToken(token);
-    setRol(rol);
+    setRol(normalizedRole);
     localStorage.setItem('token', token);
-    localStorage.setItem('rol', rol);
+    localStorage.setItem('rol', normalizedRole);
   };
 
   const handleLogout = () => {
@@ -40,32 +44,28 @@ function App() {
 
   if (rol === 'Solicitante') {
     return (
-      <div>
-        <button onClick={handleLogout}>Cerrar sesión</button>
-        <TicketForm token={token} />
-        <TicketList token={token} role={rol} />
+      <>
+        <UserDashboard onLogout={handleLogout} />
         <ChatBotWidget />
-      </div>
+      </>
     );
   }
 
   if (rol === 'Tecnico') {
     return (
-      <div>
-        <button onClick={handleLogout}>Cerrar sesión</button>
-        <TicketList token={token} role={rol} />
+      <>
+        <TechnicianDashboard onLogout={handleLogout} />
         <ChatBotWidget />
-      </div>
+      </>
     );
   }
 
   if (rol === 'Administrador') {
     return (
-      <div>
-        <button onClick={handleLogout}>Cerrar sesión</button>
-        <TicketList token={token} role={rol} />
+      <>
+        <AdminDashboard onLogout={handleLogout} />
         <ChatBotWidget />
-      </div>
+      </>
     );
   }
 
