@@ -40,9 +40,22 @@ function App() {
     );
   }
 
-  return (
-    <>
-      <Dashboard onLogout={handleLogout} token={token} role={rol} />
+const renderDashboard = () => {
+  switch (rol) {
+    case 'Administrador':
+      return <AdminDashboard onLogout={handleLogout} token={token} role={rol} />;
+    case 'Tecnico':
+      return <TechnicianDashboard onLogout={handleLogout} token={token} role={rol} />;
+    default:
+      return <UserDashboard onLogout={handleLogout} token={token} role={rol} />;
+  }
+};
+
+return (
+  <>
+    {renderDashboard()}
+  </>
+); main
       <ChatBotWidget />
     </>
   );
