@@ -4,9 +4,17 @@ import './ChatBotWidget.css';
 export default function ChatBotWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { 
-      text: "¡Hola! Soy el asistente de soporte de la EMI Cochabamba. ¿En qué puedo ayudarte?", 
-      sender: "bot" 
+    {
+      text: "¡Hola! Soy el asistente de soporte de la EMI Cochabamba. ¿En qué puedo ayudarte?",
+      sender: "bot",
+      buttons: [
+        { title: "Modalidades de admisión", payload: "Cuáles son las modalidades de Admisión a la EMI?" },
+        { title: "Requisitos", payload: "Cuáles son los requisitos para formar parte de la EMI?" },
+        { title: "Prueba PSA", payload: "Qué es la prueba de suficiencia académica PSA?" },
+        { title: "Libreta militar", payload: "Cómo obtener la libreta de Servicio Militar?" },
+        { title: "Carreras", payload: "Cuáles son las carreras con las que cuenta la EMI?" },
+        { title: "Horarios", payload: "Cuáles son los horarios de atención?" }
+      ]
     }
   ]);
   const [newMessage, setNewMessage] = useState('');

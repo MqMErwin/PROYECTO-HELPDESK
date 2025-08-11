@@ -51,14 +51,14 @@ stories:
     - intent: preguntas_frecuentes
       entities:
         - "horarios"
-    - action: utter_faq_horarios
+    - action: action_responder_faq
 
 - story: pregunta frecuente contacto
   steps:
     - intent: preguntas_frecuentes
       entities:
         - "contacto"
-    - action: utter_faq_contacto
+    - action: action_responder_faq
 
 - story: flujo mixto consulta y reporte
   steps:
