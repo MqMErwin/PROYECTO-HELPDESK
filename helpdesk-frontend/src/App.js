@@ -46,8 +46,16 @@ const renderDashboard = () => {
       return <AdminDashboard onLogout={handleLogout} token={token} role={rol} />;
     case 'Tecnico':
       return <TechnicianDashboard onLogout={handleLogout} token={token} role={rol} />;
-    default:
+const renderDashboard = () => {
+  switch (rol) {
+    case 'Administrador':
+      return <AdminDashboard onLogout={handleLogout} token={token} role={rol} />;
+    case 'Tecnico':
+      return <TechnicianDashboard onLogout={handleLogout} token={token} role={rol} />;
+    case 'Solicitante':
       return <UserDashboard onLogout={handleLogout} token={token} role={rol} />;
+    default:
+      return null; // O mostrar algo por defecto si el rol es inválido
   }
 };
 
@@ -55,7 +63,8 @@ return (
   <>
     {renderDashboard()}
   </>
-); main
+);
+ main
       <ChatBotWidget />
     </>
   );
