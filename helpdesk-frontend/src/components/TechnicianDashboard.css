@@ -248,10 +248,13 @@
     border-top: 1px solid var(--gray-light);
   }
   
-  .notification-footer a {
+  .notification-footer button {
     color: var(--tech-green);
     font-size: 0.85rem;
     text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
   }
   
   .user-profile {
@@ -344,7 +347,7 @@
     width: var(--sidebar-collapsed-width);
   }
   
-  .sidebar-collapsed .tech-sidebar nav ul li a span {
+  .sidebar-collapsed .tech-sidebar nav ul li button span {
     display: none;
   }
   
@@ -357,35 +360,39 @@
     margin-bottom: 0.25rem;
   }
   
-  .tech-sidebar nav ul li a {
+  .tech-sidebar nav ul li button {
     display: flex;
     align-items: center;
+    width: 100%;
     padding: 0.75rem 1.5rem;
     color: var(--dark);
-    text-decoration: none;
     font-size: 0.95rem;
     transition: var(--transition);
     position: relative;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
   }
-  
-  .tech-sidebar nav ul li a:hover {
+
+  .tech-sidebar nav ul li button:hover {
     background-color: var(--light);
     color: var(--tech-green);
   }
-  
-  .tech-sidebar nav ul li a .icon {
+
+  .tech-sidebar nav ul li button .icon {
     margin-right: 1rem;
     font-size: 1.1rem;
     flex-shrink: 0;
     color: var(--gray);
   }
-  
-  .tech-sidebar nav ul li.active a {
+
+  .tech-sidebar nav ul li.active button {
     color: var(--tech-green);
     background-color: rgba(16, 185, 129, 0.1);
   }
-  
-  .tech-sidebar nav ul li.active a::before {
+
+  .tech-sidebar nav ul li.active button::before {
     content: '';
     position: absolute;
     left: 0;
@@ -395,7 +402,7 @@
     background-color: var(--tech-green);
     border-radius: 0 4px 4px 0;
   }
-  
+
   .tech-sidebar nav ul li.active .icon {
     color: var(--tech-green);
   }
@@ -528,8 +535,11 @@
     text-decoration: none;
     transition: var(--transition);
     font-weight: 500;
+    background: none;
+    border: none;
+    cursor: pointer;
   }
-  
+
   .view-all:hover {
     text-decoration: underline;
     color: var(--tech-green-dark);

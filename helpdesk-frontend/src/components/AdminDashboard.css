@@ -248,10 +248,13 @@
     border-top: 1px solid var(--gray-light);
   }
   
-  .notification-footer a {
+  .notification-footer button {
     color: var(--emi-blue);
     font-size: 0.85rem;
     text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
   }
   
   .user-profile {
@@ -344,7 +347,7 @@
     width: var(--sidebar-collapsed-width);
   }
   
-  .sidebar-collapsed .admin-sidebar nav ul li a span {
+  .sidebar-collapsed .admin-sidebar nav ul li button span {
     display: none;
   }
   
@@ -357,35 +360,39 @@
     margin-bottom: 0.25rem;
   }
   
-  .admin-sidebar nav ul li a {
+  .admin-sidebar nav ul li button {
     display: flex;
     align-items: center;
+    width: 100%;
     padding: 0.75rem 1.5rem;
     color: var(--dark);
-    text-decoration: none;
     font-size: 0.95rem;
     transition: var(--transition);
     position: relative;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
   }
-  
-  .admin-sidebar nav ul li a:hover {
+
+  .admin-sidebar nav ul li button:hover {
     background-color: var(--light);
     color: var(--emi-blue);
   }
-  
-  .admin-sidebar nav ul li a .icon {
+
+  .admin-sidebar nav ul li button .icon {
     margin-right: 1rem;
     font-size: 1.1rem;
     flex-shrink: 0;
     color: var(--gray);
   }
-  
-  .admin-sidebar nav ul li.active a {
+
+  .admin-sidebar nav ul li.active button {
     color: var(--emi-blue);
     background-color: rgba(30, 136, 229, 0.1);
   }
-  
-  .admin-sidebar nav ul li.active a::before {
+
+  .admin-sidebar nav ul li.active button::before {
     content: '';
     position: absolute;
     left: 0;
@@ -395,7 +402,7 @@
     background-color: var(--emi-blue);
     border-radius: 0 4px 4px 0;
   }
-  
+
   .admin-sidebar nav ul li.active .icon {
     color: var(--emi-blue);
   }
@@ -528,8 +535,11 @@
     text-decoration: none;
     transition: var(--transition);
     font-weight: 500;
+    background: none;
+    border: none;
+    cursor: pointer;
   }
-  
+
   .view-all:hover {
     text-decoration: underline;
     color: var(--emi-blue-dark);
