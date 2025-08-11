@@ -1,0 +1,60 @@
+.dashboard-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  background: #f5f5f5;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.menu-btn {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.25rem;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.menu-btn.active {
+  font-weight: bold;
+}
+
+.menu-btn.logout {
+  margin-top: 1rem;
+  color: #d00;
+}
+
+.main-content {
+  flex: 1;
+  padding: 1rem;
+}
+
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.nav-card {
+  flex: 1 1 150px;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  background: #fff;
+}
+
+.placeholder {
+  padding: 2rem;
+  text-align: center;
+  font-style: italic;
+  color: #666;
+}
