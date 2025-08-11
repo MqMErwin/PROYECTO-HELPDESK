@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './TicketForm.css';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5131/api';
 
@@ -30,29 +31,29 @@ function TicketForm({ token, onCreated }) {
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <h2>Nuevo Ticket</h2>
-      <div>
-        <input
-          type="text"
-          placeholder="Título"
-          value={titulo}
-          onChange={(e) => setTitulo(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <textarea
-          placeholder="Descripción"
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
-        />
-      </div>
-      <button type="submit">Crear</button>
-      {mensaje && <p>{mensaje}</p>}
-    </form>
-  );
-}
+    return (
+      <form className="ticket-form" onSubmit={handleSubmit}>
+        <h2>Nuevo Ticket</h2>
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Título"
+            value={titulo}
+            onChange={(e) => setTitulo(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <textarea
+            placeholder="Descripción"
+            value={descripcion}
+            onChange={(e) => setDescripcion(e.target.value)}
+          />
+        </div>
+        <button type="submit">Crear</button>
+        {mensaje && <p className="form-message">{mensaje}</p>}
+      </form>
+    );
+  }
 
 export default TicketForm;
