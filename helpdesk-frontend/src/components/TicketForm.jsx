@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5131/api';
 
-function TicketForm({ token }) {
+function TicketForm({ token, onCreated }) {
   const [titulo, setTitulo] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [mensaje, setMensaje] = useState('');
@@ -24,6 +24,7 @@ function TicketForm({ token }) {
       setMensaje(`Ticket creado con ID ${data.id}`);
       setTitulo('');
       setDescripcion('');
+      if (onCreated) onCreated();
     } else {
       setMensaje('Error al crear el ticket');
     }

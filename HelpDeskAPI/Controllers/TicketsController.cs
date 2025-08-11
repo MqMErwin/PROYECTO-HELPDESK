@@ -70,7 +70,7 @@ namespace HelpDeskAPI.Controllers
 
         // POST: api/tickets
         [HttpPost]
-        [Authorize(Roles = "Solicitante")]
+        [Authorize(Roles = "Solicitante,Administrador")]
         public async Task<ActionResult<Ticket>> CreateTicket([FromBody] Ticket ticket)
         {
             var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
