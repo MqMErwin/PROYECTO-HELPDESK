@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import Login from './components/Login';
 import ChatBotWidget from './components/ChatBotWidget';
 import Register from './components/Register';
-import AdminDashboard from './components/AdminDashboard';
-import TechnicianDashboard from './components/TechnicianDashboard';
-import UserDashboard from './components/UserDashboard';
+import Dashboard from './components/Dashboard';
 import './App.css';
 
 function App() {
@@ -42,34 +40,12 @@ function App() {
     );
   }
 
-  if (rol === 'Solicitante') {
-    return (
-      <>
-        <UserDashboard onLogout={handleLogout} token={token} role={rol} />
-        <ChatBotWidget />
-      </>
-    );
-  }
-
-  if (rol === 'Tecnico') {
-    return (
-      <>
-        <TechnicianDashboard onLogout={handleLogout} token={token} role={rol} />
-        <ChatBotWidget />
-      </>
-    );
-  }
-
-  if (rol === 'Administrador') {
-    return (
-      <>
-        <AdminDashboard onLogout={handleLogout} token={token} role={rol} />
-        <ChatBotWidget />
-      </>
-    );
-  }
-
-  return <div>No tienes permisos</div>;
+  return (
+    <>
+      <Dashboard onLogout={handleLogout} token={token} role={rol} />
+      <ChatBotWidget />
+    </>
+  );
 }
 
 export default App;
