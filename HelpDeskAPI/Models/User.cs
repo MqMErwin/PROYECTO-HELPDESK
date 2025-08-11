@@ -18,7 +18,7 @@ namespace HelpDeskAPI.Models
         public string Contrasena { get; set; } = string.Empty;
 
         [Required]
-        public string Rol { get; set; } = string.Empty; // ejemplo: "Usuario", "Técnico", "Admin"
+        public string Rol { get; set; } = string.Empty; // Roles: "Administrador", "Tecnico", "Solicitante"
 
         public ICollection<Ticket> TicketsCreados { get; set; } = new List<Ticket>();
 
