@@ -3,3 +3,5 @@ HelpDeskAPI/helpdesk.db
 **/obj/
 node_modules/
 .env
+**/__pycache__/
+**/*.pyc
