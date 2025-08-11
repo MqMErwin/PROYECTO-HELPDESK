@@ -23,7 +23,7 @@ namespace HelpDeskAPI.Controllers
             var messages = await _context.ChatMessages
                 .Where(m => m.TicketId == ticketId)
                 .Include(m => m.Usuario)
-                .OrderBy(m => m.Timestamp)
+                .OrderBy(m => m.Fecha)
                 .ToListAsync();
 
             return messages;
@@ -33,7 +33,7 @@ namespace HelpDeskAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<ChatMessage>> PostMessage(ChatMessage message)
         {
-            message.Timestamp = DateTime.UtcNow;
+            message.Fecha = DateTime.UtcNow;
 
             if (message.TicketId == 0)
             {

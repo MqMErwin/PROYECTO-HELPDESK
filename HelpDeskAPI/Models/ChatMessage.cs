@@ -22,8 +22,7 @@ namespace HelpDeskAPI.Models
         [Required]
         public string Mensaje { get; set; } = string.Empty;
 
-        public DateTime Fecha { get; set; }
-        public DateTime Timestamp { get; set; } = DateTime.Now;
+        public DateTime Fecha { get; set; } = DateTime.UtcNow;
 
     }
 }
