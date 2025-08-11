@@ -59,7 +59,17 @@ class ActionValidarProblema(Action):
                      f"Por favor especifica aula, laboratorio, oficina, etc."
             )
             return [SlotSet("ubicacion", None)]
-        
+
+        if not equipo or not ubicacion:
+            faltante = []
+            if not equipo:
+                faltante.append("qué equipo presenta el problema")
+            if not ubicacion:
+                faltante.append("dónde se encuentra")
+            dispatcher.utter_message(
+                text="Necesito saber " + " y ".join(faltante) + " para registrar tu ticket."
+            )
+
         return [SlotSet("equipo", equipo), SlotSet("ubicacion", ubicacion)]
 
 class ActionCrearTicket(Action):
@@ -182,7 +192,21 @@ class ActionResponderFAQ(Action):
             dispatcher.utter_message(response="utter_faq_libreta")
         elif "carrera" in latest_message or "programa" in latest_message:
             dispatcher.utter_message(response="utter_faq_carreras")
-        elif "contacto" in latest_message or "llamar" in latest_message:
+        elif "tiempo" in latest_message or "tardan" in latest_message or "responden" in latest_message:
+            dispatcher.utter_message(response="utter_faq_tiempo_respuesta")
+        elif "equipo" in latest_message and ("repar" in latest_message or "arregl" in latest_message):
+            dispatcher.utter_message(response="utter_faq_equipos_reparar")
+        elif "fin de semana" in latest_message or "fines de semana" in latest_message or "domingo" in latest_message:
+            dispatcher.utter_message(response="utter_faq_fin_de_semana")
+        elif "garant" in latest_message:
+            dispatcher.utter_message(response="utter_faq_garantia")
+        elif "jefe" in latest_message and "soporte" in latest_message:
+            dispatcher.utter_message(response="utter_faq_jefe_soporte")
+        elif "olvid" in latest_message and "contrase" in latest_message:
+            dispatcher.utter_message(response="utter_faq_olvido_contrasena")
+        elif "material" in latest_message:
+            dispatcher.utter_message(response="utter_faq_solicitar_materiales")
+        elif "contacto" in latest_message or "llamar" in latest_message or "oficina" in latest_message:
             dispatcher.utter_message(response="utter_faq_contacto")
         else:
             dispatcher.utter_message(response="utter_default")

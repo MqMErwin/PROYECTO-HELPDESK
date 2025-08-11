@@ -55,6 +55,27 @@ responses:
     - text: "Puedes contactar al área técnica al teléfono 1234567 o al correo soporte@emi.edu.bo"
     - text: "Oficina de Soporte: Edificio Central, piso 2. Tel: 1234567. Correo: soporte@emi.edu.bo"
 
+  utter_faq_tiempo_respuesta:
+    - text: "Respondemos normalmente dentro de 24 horas hábiles después de recibir tu solicitud."
+
+  utter_faq_equipos_reparar:
+    - text: "Podemos dar soporte a computadoras, impresoras, proyectores y otros equipos institucionales."
+
+  utter_faq_fin_de_semana:
+    - text: "El servicio de soporte opera de lunes a viernes; los fines de semana permanecemos cerrados."
+
+  utter_faq_garantia:
+    - text: "Las reparaciones cuentan con una garantía de 30 días sobre el trabajo realizado."
+
+  utter_faq_jefe_soporte:
+    - text: "El jefe de soporte actual es el Ing. Carlos Pérez."
+
+  utter_faq_olvido_contrasena:
+    - text: "Si olvidaste tu contraseña, visita la oficina de soporte con tu identificación para restablecerla."
+
+  utter_faq_solicitar_materiales:
+    - text: "Para solicitar materiales debes enviar una nota a logística o llenar el formulario del portal interno."
+
   utter_default:
     - text: "Disculpa, no entendí completamente. ¿Podrías reformular tu consulta?"
     - text: "Voy a derivar tu consulta a un técnico. Mientras tanto, ¿hay algo más específico que necesites?"
