@@ -25,7 +25,7 @@ export default function Login({ onLogin, onShowRegister }) {
       }
 
       const data = await response.json();
-      onLogin(data.token, data.role || 'Solicitante');
+      onLogin(data.token, data.role || 'Usuario');
     } catch (err) {
       setError('Error de conexión');
     }
