@@ -163,12 +163,22 @@ class ActionResponderFAQ(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
         latest_message = tracker.latest_message.get('text').lower()
-        
+
         if "horario" in latest_message or "hora" in latest_message:
             dispatcher.utter_message(response="utter_faq_horarios")
+        elif "modalidad" in latest_message or "admis" in latest_message:
+            dispatcher.utter_message(response="utter_faq_modalidades")
+        elif "requisit" in latest_message or "document" in latest_message:
+            dispatcher.utter_message(response="utter_faq_requisitos")
+        elif "psa" in latest_message or "suficiencia" in latest_message:
+            dispatcher.utter_message(response="utter_faq_psa")
+        elif "libreta" in latest_message or "servicio militar" in latest_message:
+            dispatcher.utter_message(response="utter_faq_libreta")
+        elif "carrera" in latest_message or "programa" in latest_message:
+            dispatcher.utter_message(response="utter_faq_carreras")
         elif "contacto" in latest_message or "llamar" in latest_message:
             dispatcher.utter_message(response="utter_faq_contacto")
         else:
             dispatcher.utter_message(response="utter_default")
-        
+
         return []

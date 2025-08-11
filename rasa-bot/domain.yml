@@ -34,8 +34,22 @@ responses:
     - text: "Consulta: {num_ticket} | Estado: {estado} | {comentario}"
 
   utter_faq_horarios:
-    - text: "Nuestro horario de atención es de lunes a viernes de 8:00 a 20:00, y sábados de 9:00 a 14:00."
-    - text: "Atención al público: L-V 8-20, Sáb 9-14. Soporte remoto 24/7 para emergencias."
+    - text: "Horarios de atención:\nLunes: 08:00 – 12:00, 14:30 – 16:00\nMartes: 08:00 – 18:30\nMiércoles: 08:00 – 16:00\nJueves: 08:00 – 16:00\nViernes: 08:00 – 16:00\nSábado y domingo: cerrado"
+
+  utter_faq_modalidades:
+    - text: "La EMI tiene tres modalidades de admisión:\n1. Preuniversitario regular (11 semanas).\n2. Preuniversitario intensivo (4 semanas).\n3. Prueba de suficiencia académica con nota mínima de 5.1/10."
+
+  utter_faq_requisitos:
+    - text: "Requisitos para ingresar a la EMI:\n- Aprobar una modalidad de admisión.\n- Fotocopia legalizada del diploma de bachiller.\n- Certificado de nacimiento.\n- Fotocopia de CI del estudiante y del tutor.\n- Croquis de domicilio y factura de luz o agua."
+
+  utter_faq_psa:
+    - text: "La PSA evalúa matemática, física y química.\nInscripción: Bs. 100, hasta el 24 de enero.\nSe rinde el 25-27 de enero en la mañana. Requisitos: CI, diploma de bachiller y boleta de depósito al Banco Unión."
+
+  utter_faq_libreta:
+    - text: "La formación militar en la EMI es voluntaria, pero permite obtener la libreta con grado de reserva.\nSe realiza en los dos primeros semestres (sábados por la mañana).\nEl estudiante no debe tener más de 22 años al ingresar."
+
+  utter_faq_carreras:
+    - text: "La EMI ofrece carreras en cinco unidades académicas.\nLicenciaturas: Civil, Geográfica, Sistemas, Industrial, Agronómica, Comercial, Agroindustrial, Ambiental, Petrolera, Mecatrónica, Telecomunicaciones, Financiera y más.\nTécnico Superior: Informática, Sistemas Electrónicos, Energías Renovables, Construcción Civil, Diseño Gráfico."
 
   utter_faq_contacto:
     - text: "Puedes contactar al área técnica al teléfono 1234567 o al correo soporte@emi.edu.bo"
