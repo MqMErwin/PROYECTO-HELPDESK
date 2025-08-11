@@ -17,7 +17,7 @@ export default function Register({ onBack }) {
       const response = await fetch('http://localhost:5131/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre, correo, contrasena, rol: 'Usuario' })
+        body: JSON.stringify({ nombre, correo, contrasena, rol: 'Solicitante' })
       });
 
       if (!response.ok) {
