@@ -1,6 +1,7 @@
 using HelpDeskAPI.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -60,6 +61,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// 🗃️ Aplicar migraciones y crear la base de datos si no existe
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<HelpDeskContext>();
+    db.Database.Migrate();
+}
 
 // 🌐 Middleware de desarrollo y documentación
 if (app.Environment.IsDevelopment())
