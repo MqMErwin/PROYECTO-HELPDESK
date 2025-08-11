@@ -17,8 +17,9 @@ import {
   FiFileText
 } from 'react-icons/fi';
 import TicketList from './TicketList';
+import TicketForm from './TicketForm';
 
-export default function TechnicianDashboard({ onLogout }) {
+export default function TechnicianDashboard({ onLogout, token, role }) {
   const [notifications] = useState([
     { id: 1, text: 'Nuevo ticket asignado #TKT-00789', time: '10 min ago', read: false },
     { id: 2, text: 'Ticket #TKT-00425 requiere atención', time: '1 hora ago', read: true },
@@ -221,7 +222,7 @@ export default function TechnicianDashboard({ onLogout }) {
               </div>
               <h3>Ver Tickets Asignados</h3>
               <p>Revisa los tickets que te han sido asignados para atención.</p>
-              <button className="card-button">Ver Tickets</button>
+              <button className="card-button" onClick={() => setActiveMenu('tickets')}>Ver Tickets</button>
             </div>
 
             <div className="tech-card update-card">
@@ -230,7 +231,7 @@ export default function TechnicianDashboard({ onLogout }) {
               </div>
               <h3>Actualizar Estados</h3>
               <p>Marca los tickets como en progreso o resueltos.</p>
-              <button className="card-button">Actualizar</button>
+              <button className="card-button" onClick={() => setActiveMenu('tickets')}>Actualizar</button>
             </div>
 
             <div className="tech-card new-card">
@@ -239,7 +240,7 @@ export default function TechnicianDashboard({ onLogout }) {
               </div>
               <h3>Crear Reporte</h3>
               <p>Genera un nuevo reporte de incidencia o solicitud.</p>
-              <button className="card-button">Nuevo Reporte</button>
+              <button className="card-button" onClick={() => setActiveMenu('new')}>Nuevo Reporte</button>
             </div>
           </div>
           
@@ -280,8 +281,11 @@ export default function TechnicianDashboard({ onLogout }) {
               </div>
             ))}
           </div>
-          {['tickets', 'new'].includes(activeMenu) && (
-            <TicketList filter={{ tecnicoId: 2 }} currentUserId={2} />
+          {activeMenu === 'tickets' && (
+            <TicketList token={token} role={role} />
+          )}
+          {activeMenu === 'new' && (
+            <TicketForm token={token} />
           )}
         </main>
       </div>
