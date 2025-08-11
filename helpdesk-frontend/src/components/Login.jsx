@@ -16,7 +16,7 @@ export default function Login({ onLogin, onShowRegister }) {
       const response = await fetch('http://localhost:5131/api/users/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ correo, contraseña: contrasena })
+        body: JSON.stringify({ correo, contrasena })
       });
 
       if (!response.ok) {

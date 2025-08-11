@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HelpDeskAPI.Models
 {
@@ -13,7 +14,8 @@ namespace HelpDeskAPI.Models
         public string Correo { get; set; } = string.Empty;
 
         [Required]
-        public string Contraseña { get; set; } = string.Empty;
+        [Column("Contraseña")]
+        public string Contrasena { get; set; } = string.Empty;
 
         [Required]
         public string Rol { get; set; } = string.Empty; // ejemplo: "Usuario", "Técnico", "Admin"

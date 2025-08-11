@@ -48,9 +48,9 @@ namespace HelpDeskAPI.Controllers
         public IActionResult Login([FromBody] LoginRequest loginRequest)
         {
             var correo = loginRequest.Correo;
-            var contraseña = loginRequest.Contraseña;
+            var contrasena = loginRequest.Contrasena;
 
-            var user = _context.Users.FirstOrDefault(u => u.Correo == correo && u.Contraseña == contraseña);
+            var user = _context.Users.FirstOrDefault(u => u.Correo == correo && u.Contrasena == contrasena);
             if (user == null)
             {
                 return Unauthorized();
@@ -77,7 +77,7 @@ namespace HelpDeskAPI.Controllers
 
             user.Nombre = updatedUser.Nombre;
             user.Correo = updatedUser.Correo;
-            user.Contraseña = updatedUser.Contraseña;
+            user.Contrasena = updatedUser.Contrasena;
             user.Rol = updatedUser.Rol;
 
             await _context.SaveChangesAsync();
