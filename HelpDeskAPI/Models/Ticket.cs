@@ -18,7 +18,8 @@ namespace HelpDeskAPI.Models
         [Required]
         public string Titulo { get; set; } = string.Empty;
 
-        public string? Descripcion { get; set; }
+        [Required]
+        public string Descripcion { get; set; } = string.Empty;
 
         [Required]
         public int UsuarioId { get; set; }
