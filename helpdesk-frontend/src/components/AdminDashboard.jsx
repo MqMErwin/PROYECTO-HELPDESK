@@ -14,7 +14,7 @@ import {
 } from 'react-icons/fi';
 import TicketList from './TicketList';
 
-export default function AdminDashboard({ onLogout }) {
+export default function AdminDashboard({ onLogout, token, role }) {
   const [notifications] = useState([
     { id: 1, text: 'Nuevo ticket asignado', time: '10 min ago', read: false },
     { id: 2, text: 'Actualización del sistema disponible', time: '1 hora ago', read: true },
@@ -203,7 +203,7 @@ export default function AdminDashboard({ onLogout }) {
               </div>
               <h3>Configurar Sistema</h3>
               <p>Administrar roles y categorías del sistema.</p>
-              <button className="card-button">Ir a Configuración</button>
+              <button className="card-button" onClick={() => setActiveMenu('settings')}>Ir a Configuración</button>
             </div>
 
             <div className="admin-card reports-card">
@@ -212,7 +212,7 @@ export default function AdminDashboard({ onLogout }) {
               </div>
               <h3>Ver Reportes</h3>
               <p>Visualizar estadísticas de tickets y rendimiento.</p>
-              <button className="card-button">Ver Reportes</button>
+              <button className="card-button" onClick={() => setActiveMenu('reports')}>Ver Reportes</button>
             </div>
 
             <div className="admin-card tickets-card">
@@ -221,7 +221,7 @@ export default function AdminDashboard({ onLogout }) {
               </div>
               <h3>Asignar Tickets</h3>
               <p>Asignar solicitudes a técnicos disponibles.</p>
-              <button className="card-button">Asignar Tickets</button>
+              <button className="card-button" onClick={() => setActiveMenu('tickets')}>Asignar Tickets</button>
             </div>
 
             <div className="admin-card users-card">
@@ -230,7 +230,7 @@ export default function AdminDashboard({ onLogout }) {
               </div>
               <h3>Gestionar Usuarios</h3>
               <p>Agregar, editar y eliminar cuentas de usuarios.</p>
-              <button className="card-button">Gestionar Usuarios</button>
+              <button className="card-button" onClick={() => setActiveMenu('users')}>Gestionar Usuarios</button>
             </div>
           </div>
           
@@ -266,7 +266,16 @@ export default function AdminDashboard({ onLogout }) {
             </div>
           </div>
           {activeMenu === 'tickets' && (
-            <TicketList currentUserId={3} />
+            <TicketList token={token} role={role} />
+          )}
+          {activeMenu === 'users' && (
+            <div className="placeholder">Gestión de usuarios en construcción</div>
+          )}
+          {activeMenu === 'settings' && (
+            <div className="placeholder">Configuración del sistema</div>
+          )}
+          {activeMenu === 'reports' && (
+            <div className="placeholder">Reportes del sistema</div>
           )}
         </main>
       </div>

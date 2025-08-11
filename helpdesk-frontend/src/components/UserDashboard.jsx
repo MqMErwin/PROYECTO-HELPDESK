@@ -18,8 +18,9 @@ import {
   FiHelpCircle
 } from 'react-icons/fi';
 import TicketList from './TicketList';
+import TicketForm from './TicketForm';
 
-export default function UserDashboard({ onLogout }) {
+export default function UserDashboard({ onLogout, token, role }) {
   const [notifications] = useState([
     { id: 1, text: 'Tu ticket #TKT-00789 ha sido asignado', time: '10 min ago', read: false },
     { id: 2, text: 'Respuesta a tu ticket #TKT-00785', time: '1 hora ago', read: true },
@@ -222,7 +223,7 @@ export default function UserDashboard({ onLogout }) {
               </div>
               <h3>Crear Nuevo Ticket</h3>
               <p>Reporta cualquier problema técnico que tengas con el sistema.</p>
-              <button className="card-button">Nuevo Ticket</button>
+              <button className="card-button" onClick={() => setActiveMenu('new-ticket')}>Nuevo Ticket</button>
             </div>
 
             <div className="user-card check-status-card">
@@ -231,7 +232,7 @@ export default function UserDashboard({ onLogout }) {
               </div>
               <h3>Consultar Estado</h3>
               <p>Revisa el estado actual de tus tickets reportados.</p>
-              <button className="card-button">Ver Tickets</button>
+              <button className="card-button" onClick={() => setActiveMenu('my-tickets')}>Ver Tickets</button>
             </div>
 
             <div className="user-card faq-card">
@@ -240,7 +241,7 @@ export default function UserDashboard({ onLogout }) {
               </div>
               <h3>Preguntas Frecuentes</h3>
               <p>Encuentra respuestas rápidas a las dudas más comunes.</p>
-              <button className="card-button">Ver FAQ</button>
+              <button className="card-button" onClick={() => setActiveMenu('faq')}>Ver FAQ</button>
             </div>
           </div>
           
@@ -281,8 +282,11 @@ export default function UserDashboard({ onLogout }) {
               </div>
             ))}
           </div>
-          {['new-ticket', 'my-tickets'].includes(activeMenu) && (
-            <TicketList filter={{ usuarioId: 1 }} currentUserId={1} />
+          {activeMenu === 'new-ticket' && (
+            <TicketForm token={token} />
+          )}
+          {activeMenu === 'my-tickets' && (
+            <TicketList token={token} role={role} />
           )}
         </main>
       </div>

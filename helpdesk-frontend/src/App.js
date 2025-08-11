@@ -45,7 +45,7 @@ function App() {
   if (rol === 'Solicitante') {
     return (
       <>
-        <UserDashboard onLogout={handleLogout} />
+        <UserDashboard onLogout={handleLogout} token={token} role={rol} />
         <ChatBotWidget />
       </>
     );
@@ -54,7 +54,7 @@ function App() {
   if (rol === 'Tecnico') {
     return (
       <>
-        <TechnicianDashboard onLogout={handleLogout} />
+        <TechnicianDashboard onLogout={handleLogout} token={token} role={rol} />
         <ChatBotWidget />
       </>
     );
@@ -63,7 +63,7 @@ function App() {
   if (rol === 'Administrador') {
     return (
       <>
-        <AdminDashboard onLogout={handleLogout} />
+        <AdminDashboard onLogout={handleLogout} token={token} role={rol} />
         <ChatBotWidget />
       </>
     );
